@@ -5,7 +5,7 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
 use Laravel\Lumen\Testing\WithoutMiddleware;
 use Messages as mess;
 
-class ExampleTest extends TestCase
+class Khachtro_Test extends TestCase
 {
     use DatabaseTransactions;
     use WithoutMiddleware;
