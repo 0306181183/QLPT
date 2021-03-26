@@ -21,7 +21,7 @@ class TempSeeder extends DatabaseSeeder
             ["id"=>$this->phongdathue2,"tenphong"=>"Phòng đã thuê","songuoimax"=>2,"giaphong"=>2000000,"trangthai"=>true]
         ]);
         DB::table('HopDong')->insert([
-            ["id"=>$this->hopdong,"ngaylap"=>$date,"thoihan"=>6,"tiencoc"=>2000000,"trangthai"=>true,"idphong"=>$this->phongdathue],
+            ["id"=>$this->hopdong,"ngaylap"=>$date,"thoihan"=>6,"tiencoc"=>2000000,"trangthai"=>true,"idphong"=>$this->phongdathue1],
             ["id"=>$this->hopdong2,"ngaylap"=>$date,"thoihan"=>6,"tiencoc"=>2000000,"trangthai"=>true,"idphong"=>$this->phongdathue2]
         ]);
         DB::table('KhachTro')->insert([
