@@ -27,7 +27,7 @@ class Phong_Test extends TestCase
     public function testUpdate_1()
     {
         $input = [
-            'id'=>'a79b3de8-506d-412d-a5f4-76dcd2679829',
+            'id'=>$this->phongchuathue1,
             'tenphong' => 'Phòng 1',
             'songuoimax' => 4,
         ];
@@ -41,7 +41,7 @@ class Phong_Test extends TestCase
     public function testUpdateFail()
     {
         $input = [
-            'id'=>'a82ed5fe5-e28f-4dfc-b2c5-92732bc235fc',
+            'id'=>$this->phongdathue1,
             'tenphong' => 'Phòng đã thuê',
             'songuoimax' => 1,
         ];
@@ -53,7 +53,7 @@ class Phong_Test extends TestCase
 
     public function testUpdate_2(){
         $input = [
-            'id'=>'82ed5fe5-e28f-4dfc-b2c5-92732bc235fc',
+            'id'=>$this->phongdathue1,
             'tenphong' => 'Phòng đã thuê',
             'songuoimax' => 3,
         ];
@@ -65,7 +65,7 @@ class Phong_Test extends TestCase
 
     public function testClose(){
         $input = [
-            'id'=>'a79b3de8-506d-412d-a5f4-76dcd2679829',
+            'id'=>$this->phongchuathue1,
             'trangthai' => 0,
 
         ];
@@ -77,7 +77,7 @@ class Phong_Test extends TestCase
 
     public function testCloseFail(){
         $input = [
-            'id'=>'82ed5fe5-e28f-4dfc-b2c5-92732bc235fc',
+            'id'=>$this->phongdathue1,
             'trangthai' => 0,
 
         ];
@@ -89,7 +89,7 @@ class Phong_Test extends TestCase
 
     public function testOpen(){
         $input = [
-            'id'=>'ff9d0815-8064-462d-b09d-2d34e8ce323c',
+            'id'=>$this->phongdong,
             'trangthai' => 1,
 
         ];
@@ -101,7 +101,7 @@ class Phong_Test extends TestCase
 
     public function testUpdatePrice(){
         $input = [
-            'id'=>'82ed5fe5-e28f-4dfc-b2c5-92732bc235fc',
+            'id'=>$this->phongdathue1,
             'giaphong' => 3000000,
 
         ];
