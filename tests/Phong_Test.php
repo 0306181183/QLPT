@@ -6,7 +6,7 @@ use Laravel\Lumen\Testing\WithoutMiddleware;
 
 use Messages as MES;
 
-class PhongTest extends TestCase
+class Phong_Test extends TestCase
 {
     use DatabaseTransactions;
     use WithoutMiddleware;
