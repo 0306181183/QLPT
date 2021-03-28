@@ -13,7 +13,7 @@ class Xe_Test extends TestCase
         $input = [
             'loaixe'=>'wave',
             'bienso' => '12b-3456',
-            'idkhach'=>'f7996832-1029-40e9-979a-203cd68abc9e',
+            'idkhach'=>$this->khach1,
 
         ];
 
@@ -24,7 +24,7 @@ class Xe_Test extends TestCase
 
     public function testDelete(){
         $input = [
-            'idkhach'=>'a93023c1-8c84-4b6c-99e6-a19be25331a7',
+            'idxe'=>$this->xe1,
         ];
 
         $this->call('POST', 'xoa-xe', $input);
