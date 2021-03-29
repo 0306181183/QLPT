@@ -20,6 +20,7 @@ class Xe_Test extends TestCase
         $this->call('POST', 'them-xe', $input);
         $this->seeJsonEquals(['success' => MES::$themxe]);
         $this->seeStatusCode(200);
+
     }
 
     public function testDelete(){
@@ -30,6 +31,7 @@ class Xe_Test extends TestCase
         $this->call('POST', 'xoa-xe', $input);
         $this->seeJsonEquals(['success' => MES::$xoaxe]);
         $this->seeStatusCode(200);
+
     }
 
 
