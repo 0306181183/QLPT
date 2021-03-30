@@ -109,6 +109,7 @@ class Phong_Test extends TestCase
         $this->call('POST', 'mo-phong', $input);
         $this->seeJsonEquals(['success' => MES::$mophong]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('phong',$data);
 
     }
 
@@ -122,6 +123,7 @@ class Phong_Test extends TestCase
         $this->call('POST', 'sua-giaphong', $input);
         $this->seeJsonEquals(['success' => MES::$suagiaphong]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('phong',$input);
 
     }
 
