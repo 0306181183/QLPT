@@ -20,10 +20,8 @@ class Xe_Test extends TestCase
         $this->call('POST', 'them-xe', $input);
         $this->seeJsonEquals(['success' => MES::$themxe]);
         $this->seeStatusCode(200);
-<<<<<<< HEAD
         $this->seeInDatabase('xe',$input);
-=======
->>>>>>> ccc077e6594f56a1a1a346dbdd306ed0bc06838a
+
 
     }
 
@@ -35,11 +33,7 @@ class Xe_Test extends TestCase
         $this->call('POST', 'xoa-xe', $input);
         $this->seeJsonEquals(['success' => MES::$xoaxe]);
         $this->seeStatusCode(200);
-<<<<<<< HEAD
         $this->notSeeInDatabase('xe',$input);
-=======
-
->>>>>>> ccc077e6594f56a1a1a346dbdd306ed0bc06838a
     }
 
 

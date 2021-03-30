@@ -37,12 +37,8 @@ class Phong_Test extends TestCase
         $this->call('POST', 'sua-phong', $input);
         $this->seeJsonEquals(['success' => MES::$suaphong]);
         $this->seeStatusCode(200);
-<<<<<<< HEAD:tests/Phong_Test.php
+
         $this->seeInDatabase('phong',$input);
-=======
-
-
->>>>>>> ccc077e6594f56a1a1a346dbdd306ed0bc06838a:tests/PhongTest.php
     }
 
     public function testUpdate_fail()
@@ -69,11 +65,7 @@ class Phong_Test extends TestCase
         $this->call('POST', 'sua-phong', $input);
         $this->seeJsonEquals(['success' => MES::$suaphong]);
         $this->seeStatusCode(200);
-<<<<<<< HEAD:tests/Phong_Test.php
         $this->seeInDatabase('phong',$input);
-=======
-
->>>>>>> ccc077e6594f56a1a1a346dbdd306ed0bc06838a:tests/PhongTest.php
     }
 
     public function testClose(){
@@ -89,11 +81,7 @@ class Phong_Test extends TestCase
         $this->call('POST', 'dong-phong', $input);
         $this->seeJsonEquals(['success' => MES::$dongphong]);
         $this->seeStatusCode(200);
-<<<<<<< HEAD:tests/Phong_Test.php
         $this->seeInDatabase('phong',$data);
-=======
-
->>>>>>> ccc077e6594f56a1a1a346dbdd306ed0bc06838a:tests/PhongTest.php
     }
 
     public function testCloseFail(){
