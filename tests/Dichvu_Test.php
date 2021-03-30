@@ -19,7 +19,11 @@ class Dichvu_Test extends TestCase
         $this->call('POST', 'sua-giadv', $input);
         $this->seeJsonEquals(['success' => MESS::$suagiadv]);
         $this->seeStatusCode(200);
+<<<<<<< HEAD
         $this->seeInDatabase('giadichvu',$input);
+=======
+
+>>>>>>> ccc077e6594f56a1a1a346dbdd306ed0bc06838a
     }
 
 

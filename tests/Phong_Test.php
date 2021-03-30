@@ -23,6 +23,7 @@ class Phong_Test extends TestCase
         $this->seeStatusCode(200);
         $this->seeInDatabase('phong',$input);
 
+
     }
 
     public function testUpdate()
@@ -36,7 +37,12 @@ class Phong_Test extends TestCase
         $this->call('POST', 'sua-phong', $input);
         $this->seeJsonEquals(['success' => MES::$suaphong]);
         $this->seeStatusCode(200);
+<<<<<<< HEAD:tests/Phong_Test.php
         $this->seeInDatabase('phong',$input);
+=======
+
+
+>>>>>>> ccc077e6594f56a1a1a346dbdd306ed0bc06838a:tests/PhongTest.php
     }
 
     public function testUpdate_fail()
@@ -50,6 +56,7 @@ class Phong_Test extends TestCase
         $this->call('POST', 'sua-phong', $input);
         $this->seeJsonEquals(['conflict' => MES::$suaphong_fail]);
         $this->seeStatusCode(409);
+
     }
 
     public function testUpdate1(){
@@ -62,7 +69,11 @@ class Phong_Test extends TestCase
         $this->call('POST', 'sua-phong', $input);
         $this->seeJsonEquals(['success' => MES::$suaphong]);
         $this->seeStatusCode(200);
+<<<<<<< HEAD:tests/Phong_Test.php
         $this->seeInDatabase('phong',$input);
+=======
+
+>>>>>>> ccc077e6594f56a1a1a346dbdd306ed0bc06838a:tests/PhongTest.php
     }
 
     public function testClose(){
@@ -78,7 +89,11 @@ class Phong_Test extends TestCase
         $this->call('POST', 'dong-phong', $input);
         $this->seeJsonEquals(['success' => MES::$dongphong]);
         $this->seeStatusCode(200);
+<<<<<<< HEAD:tests/Phong_Test.php
         $this->seeInDatabase('phong',$data);
+=======
+
+>>>>>>> ccc077e6594f56a1a1a346dbdd306ed0bc06838a:tests/PhongTest.php
     }
 
     public function testCloseFail(){
@@ -91,6 +106,7 @@ class Phong_Test extends TestCase
         $this->call('POST', 'dong-phong', $input);
         $this->seeJsonEquals(['conflict' => MES::$dongphong_fail]);
         $this->seeStatusCode(409);
+
     }
 
     public function testOpen(){
@@ -105,6 +121,7 @@ class Phong_Test extends TestCase
         $this->call('POST', 'mo-phong', $input);
         $this->seeJsonEquals(['success' => MES::$mophong]);
         $this->seeStatusCode(200);
+
     }
 
     public function testUpdatePrice(){
@@ -117,6 +134,7 @@ class Phong_Test extends TestCase
         $this->call('POST', 'sua-giaphong', $input);
         $this->seeJsonEquals(['success' => MES::$suagiaphong]);
         $this->seeStatusCode(200);
+
     }
 
 
