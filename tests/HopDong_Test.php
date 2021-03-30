@@ -21,9 +21,18 @@ class HopDong_Test extends TestCase
                 'khach2'=>$this->khach4
             ],
         ];
+        $data=[
+            'thoihan'=>$input['thoihan'],
+            'tiencoc'=>$input['tiencoc'],
+            'trangthai'=>true,
+            'idphong'=>$input['idphong']
+        ];
         $this->call('POST','tao-hopdong',$input);
         $this->seeJsonEquals(['success'=>mess::$taohopdong]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('hopdong',$data);
+
+
 
     }
     public function testCreate_fail()
@@ -48,10 +57,18 @@ class HopDong_Test extends TestCase
             'id'=>$this->hopdong,
             'chisodien'=>349
         ];
+        $data=[
+            'idloai'=>6,
+            'noidung'=>[
+                'chisodien'=>$input['chisodien']
+            ],
+            'idhopdong'=>$input['id']
+        ];
 
         $this->call('POST','ghi-dien',$input);
         $this->seeJsonEquals(['seccess'=>mess::$ghidien]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('log',$data);
 
 
     }
@@ -77,15 +94,37 @@ class HopDong_Test extends TestCase
         $this->seeJsonEquals(['seccess'=>mess::$taophieuthu]);
         $this->seeStatusCode(200);
     }
+    public  function  testThanhToan()
+    {
+        $input=[
+            'id'=>$this->hopdong,
+        ];
+        $this->call('POST','thanh-toan',$input);
+        $this->seeJsonEquals(['seccess'=>mess::$thanhtoan]);
+        $this->seeStatusCode(200);
+    }
     public function testThemNguoi()
     {
         $input=[
             'id'=>$this->hopdong2,
             'idkhach'=>$this->khach3
         ];
+        $data1=[
+          'id'=>$input['idkhach'],
+            'idhopdong'=>$input['id']
+        ];
+        $data2=[
+            'idloai'=>2,
+            'noidung'=>[
+                'idkhach'=>$input['idkhach']
+                ],
+            'idhopdong'=>$input['id']
+        ];
         $this->call('POST','them-nguoiHD',$input);
         $this->seeJsonEquals(['seccess'=>mess::$themnguoivaoHD]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('khachtro',$data1);
+        $this->seeInDatabase('log',$data2);
     }
     public function testThemNguoi_fail()
     {
@@ -103,9 +142,22 @@ class HopDong_Test extends TestCase
             'id'=>$this->hopdong,
             'idkhach'=>$this->khach1
         ];
+        $data1=[
+            'id'=>$input['idkhach'],
+            'idhopdong'=>null
+        ];
+        $data2=[
+            'idloai'=>3,
+            'noidung'=>[
+                'idkhach'=>$input['idkhach']
+            ],
+            'idhopdong'=>$input['id']
+        ];
         $this->call('POST','xoa-nguoiHD',$input);
         $this->seeJsonEquals(['seccess'=>mess::$xoanguoikhoiHD]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('khachtro',$data1);
+        $this->seeInDatabase('log',$data2);
     }
     public function testXoaNguoi_fail()
     {
@@ -125,5 +177,6 @@ class HopDong_Test extends TestCase
         $this->call('POST','wifi',$input);
         $this->seeJsonEquals(['seccess'=>mess::$thaydoiwifi]);
         $this->seeStatusCode(200);
+
     }
 }

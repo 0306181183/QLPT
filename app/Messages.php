@@ -19,6 +19,7 @@ class Messages
     static  string $ghidien="Ghi điện thành công";
     static  string $ghidien_fail="Số điện nhỏ hơn số hiên tại";
     static  string $taophieuthu="Phiếu thu đã được khởi tạo";
+    static string $thanhtoan="Đã thanh toán thành công";
     static string $themnguoivaoHD="Thêm người vào phòng thành công";
     static string $themnguoivaoHD_fail="Số người đã đạt mức tối";
     static string $xoanguoikhoiHD="Xóa người khỏi hợp đồng thành công";

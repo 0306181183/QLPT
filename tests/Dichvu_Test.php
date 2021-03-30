@@ -16,9 +16,10 @@ class Dichvu_Test extends TestCase
 
         ];
 
-        $this->call('POST', 'sua-gia-dv', $input);
+        $this->call('POST', 'sua-giadv', $input);
         $this->seeJsonEquals(['success' => MESS::$suagiadv]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('giadichvu',$input);
     }
 
 

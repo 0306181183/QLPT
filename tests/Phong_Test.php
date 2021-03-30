@@ -21,10 +21,11 @@ class Phong_Test extends TestCase
         $this->call('POST', 'tao-phong', $input);
         $this->seeJsonEquals(['success' => MES::$taophong]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('phong',$input);
 
     }
 
-    public function testUpdate_1()
+    public function testUpdate()
     {
         $input = [
             'id'=>$this->phongchuathue1,
@@ -35,10 +36,10 @@ class Phong_Test extends TestCase
         $this->call('POST', 'sua-phong', $input);
         $this->seeJsonEquals(['success' => MES::$suaphong]);
         $this->seeStatusCode(200);
-
+        $this->seeInDatabase('phong',$input);
     }
 
-    public function testUpdateFail()
+    public function testUpdate_fail()
     {
         $input = [
             'id'=>$this->phongdathue1,
@@ -51,7 +52,7 @@ class Phong_Test extends TestCase
         $this->seeStatusCode(409);
     }
 
-    public function testUpdate_2(){
+    public function testUpdate1(){
         $input = [
             'id'=>$this->phongdathue1,
             'tenphong' => 'Phòng đã thuê',
@@ -61,18 +62,23 @@ class Phong_Test extends TestCase
         $this->call('POST', 'sua-phong', $input);
         $this->seeJsonEquals(['success' => MES::$suaphong]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('phong',$input);
     }
 
     public function testClose(){
         $input = [
-            'id'=>$this->phongchuathue1,
-            'trangthai' => 0,
+            'id'=>$this->phongchuathue1
 
+        ];
+        $data=[
+            'id'=>$input['id'],
+            'trangthai'=>false
         ];
 
         $this->call('POST', 'dong-phong', $input);
         $this->seeJsonEquals(['success' => MES::$dongphong]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('phong',$data);
     }
 
     public function testCloseFail(){
@@ -89,11 +95,13 @@ class Phong_Test extends TestCase
 
     public function testOpen(){
         $input = [
-            'id'=>$this->phongdong,
-            'trangthai' => 1,
+            'id'=>$this->phongdong
 
         ];
-
+        $data=[
+            'id'=>$input['id'],
+            'trangthai'=>true
+        ];
         $this->call('POST', 'mo-phong', $input);
         $this->seeJsonEquals(['success' => MES::$mophong]);
         $this->seeStatusCode(200);
@@ -103,10 +111,10 @@ class Phong_Test extends TestCase
         $input = [
             'id'=>$this->phongdathue1,
             'giaphong' => 3000000,
-
         ];
 
-        $this->call('POST', 'sua-gia-phong', $input);
+
+        $this->call('POST', 'sua-giaphong', $input);
         $this->seeJsonEquals(['success' => MES::$suagiaphong]);
         $this->seeStatusCode(200);
     }

@@ -14,13 +14,22 @@ class Khachtro_Test extends TestCase
         $input=[
           'tenkhach'=>'Võ Văn A',
             'cmnd'=>'12345678904',
-            'gioitinh'=>1,
+            'gioitinh'=>true,
             'ngaysinh'=>'2000/2/12',
             'quequan'=>'Tp.HCM',
+        ];
+        $data=[
+            'tenkhach'=>'Võ Văn A',
+            'cmnd'=>'12345678904',
+            'ngaysinh'=>'2000/2/12',
+            'quequan'=>'Tp.HCM',
+            'gioitinh'=>true,
+            'trangthai'=>true
         ];
         $this->call('POST','tao-khach',$input);
         $this->seeJsonEquals(['success'=>mess::$taokhach]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('khachtro',$data);
 
     }
     public  function  testUpdate()
@@ -33,18 +42,11 @@ class Khachtro_Test extends TestCase
             'ngaysinh'=>'2000/2/11',
             'quequan'=>'Tp.HCM'
         ];
-        /*$data=[
-            'id'=>$input['id'],
-            'tenkhach'=>$input['tenkhach'],
-            'cmnd'=>$input['cmnd'],
-            'gioitinh'=>$input['gioitinh'],
-            'ngaysinh'=>$input['ngaysinh'],
-            'quequan'=>$input['quequan']
-        ];*/
+
         $this->call('POST','sua-khach',$input);
         $this->seeJsonEquals(['seccess'=>mess::$suakhach]);
         $this->seeStatusCode(200);
-        $this->seeInDatabase('KhachTro',$input);
+        $this->seeInDatabase('khachtro',$input);
 
     }
     public  function  testDelete()
@@ -57,9 +59,9 @@ class Khachtro_Test extends TestCase
             'trangthai'=>false
         ];
         $this->call('POST','xoa-khach',$input);
-        $this->seeJsonEquals(['seccess'=>mess::$dongphong]);
+        $this->seeJsonEquals(['seccess'=>mess::$xoakhach]);
         $this->seeStatusCode(200);
-        $this->seeInDatabase('KhachTro', $data);
+        $this->seeInDatabase('khachtro', $data);
     }
     public function testDelete_fail()
     {
@@ -70,4 +72,6 @@ class Khachtro_Test extends TestCase
         $this->seeJsonEquals(['conflict'=>mess::$xoakhach_fail]);
         $this->seeStatusCode(409);
     }
+
+
 }
