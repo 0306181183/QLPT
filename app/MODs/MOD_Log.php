@@ -4,7 +4,7 @@
 namespace App\MODs;
 
 
-class MOD_Log
+class   MOD_Log
 {
 
 }
