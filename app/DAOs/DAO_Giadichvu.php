@@ -15,7 +15,7 @@ class DAO_Giadichvu
         app('db')->table('giadichvu')->insert([
             'id' => $dto_giadv->getId(),
             'idloai' => $dto_giadv->getIdloai(),
-            'giathaydoi' => $dto_giadv->getGiathaydoi(),
+            'giathaydoi' => date('Y-m-d'),
             'ngaythaydoi' => $dto_giadv->getNgaythaydoi(),
         ]);
     }

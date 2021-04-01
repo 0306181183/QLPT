@@ -13,12 +13,12 @@ class DAO_Khachtro
     {
         app('db')->table('khachtro')->insert([
             'id'=>$dto_khachtro->getId(),
-            'tenkhach' => $dto_khachtro->getId(),
+            'tenkhach' => $dto_khachtro->getTenkhach(),
             'cmnd' => $dto_khachtro->getCmnd(),
             'gioitinh' => $dto_khachtro->getGioitinh(),
             'ngaysinh' => $dto_khachtro->getNgaysinh(),
             'quequan' => $dto_khachtro->getQuequan(),
-            'trangthai'=>$dto_khachtro->getTrangthai(),
+            'trangthai'=>true,
 
         ]);
     }
