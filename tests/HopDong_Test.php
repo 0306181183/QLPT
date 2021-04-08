@@ -9,7 +9,7 @@ class HopDong_Test extends TestCase
 {
     use DatabaseTransactions;
     use WithoutMiddleware;
-    public function testCreate()
+    public function testCreate1()
     {
         $input=[
             'thoihan'=>6,
@@ -21,18 +21,82 @@ class HopDong_Test extends TestCase
                 'khach2'=>$this->khach4
             ],
         ];
-        $data=[
+        $data1=[
             'thoihan'=>$input['thoihan'],
             'tiencoc'=>$input['tiencoc'],
             'trangthai'=>true,
             'idphong'=>$input['idphong']
         ];
+        $data2=[
+            'chisodien'=>$input['chisodien'],
+            'songuoi'=>2,
+            'soxe'=>1,
+            'giaphong'=>4000000
+        ];
+        $data3=[
+            'idloai'=>2,
+            'noidung'=>[
+                'idkhach'=>$this->khach3
+            ]
+        ];
+        $data4=[
+            'idloai'=>2,
+            'noidung'=>[
+                'idkhach'=>$this->khach4
+            ]
+        ];
+        $data5=[
+            'idloai'=>4,
+            'noidung'=>[
+                'idkhach'=>$this->xe2
+            ]
+        ];
         $this->call('POST','tao-hopdong',$input);
         $this->seeJsonEquals(['success'=>mess::$taohopdong]);
         $this->seeStatusCode(200);
-        $this->seeInDatabase('hopdong',$data);
+        $this->seeInDatabase('hopdong',$data1);
+        $this->seeInDatabase('trangthaithue',$data2);
+        $this->seeInDatabase('log',$data3);
+        $this->seeInDatabase('log',$data4);
+        $this->seeInDatabase('log',$data5);
+    }
+    public function testCreate2()
+    {
+        $input=[
+            'thoihan'=>6,
+            'tiencoc'=>3000000,
+            'idphong'=>$this->phongchuathue1,
+            'chisodien'=>124,
+            'idkhach'=>[
+                'khach2'=>$this->khach4
+            ],
+        ];
+        $data1=[
+            'thoihan'=>$input['thoihan'],
+            'tiencoc'=>$input['tiencoc'],
+            'trangthai'=>true,
+            'idphong'=>$input['idphong']
+        ];
+
+        $data2=[
+                'chisodien'=>$input['chisodien'],
+                'songuoi'=>1,
+                'soxe'=>0,
+                'giaphong'=>4000000
+            ];
+        $data3=[     'idloai'=>2,
+            'noidung'=>[
+                'idkhach'=>$this->khach4
+            ]
+        ];
 
 
+        $this->call('POST','tao-hopdong',$input);
+        $this->seeJsonEquals(['success'=>mess::$taohopdong]);
+        $this->seeStatusCode(200);
+        $this->seeInDatabase('hopdong',$data1);
+        $this->seeInDatabase('trangthaithue',$data2);
+        $this->seeInDatabase('log',$data3);
 
     }
     public function testCreate_fail()
@@ -85,7 +149,7 @@ class HopDong_Test extends TestCase
 
 
     }
-    public  function  testTaoPhieuThu()
+    public  function  testTaoPhieuThu() //chưa sửa
     {
         $input=[
             'id'=>$this->hopdong
@@ -103,7 +167,7 @@ class HopDong_Test extends TestCase
         $this->seeJsonEquals(['seccess'=>mess::$thanhtoan]);
         $this->seeStatusCode(200);
     }
-    public function testThemNguoi()
+    public function testThemNguoi() //chưa sửa
     {
         $input=[
             'id'=>$this->hopdong2,
@@ -136,7 +200,7 @@ class HopDong_Test extends TestCase
         $this->seeJsonEquals(['conflict'=>mess::$themnguoivaoHD_fail]);
         $this->seeStatusCode(409);
     }
-    public function testXoaNguoi()
+    public function testXoaNguoi() //chưa sửa
     {
         $input=[
             'id'=>$this->hopdong,
@@ -172,11 +236,20 @@ class HopDong_Test extends TestCase
     public function testWifi()
     {
         $input=[
-            'id'=>$this->hopdong
+            'idhopdong'=>$this->hopdong,
+            'wifi'=>true
+        ];
+        $data=[
+          'idloai'=>7 ,
+            'noidung'=>[
+                'wifi'=>$input['wifi']
+            ],
+            'idhopdong'=>$input['idhopdong']
         ];
         $this->call('POST','wifi',$input);
         $this->seeJsonEquals(['seccess'=>mess::$thaydoiwifi]);
         $this->seeStatusCode(200);
+        $this->seeInDatabase('log',$data);
 
     }
 }

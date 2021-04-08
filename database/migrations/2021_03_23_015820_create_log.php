@@ -17,7 +17,7 @@ class CreateLog extends Migration
             $table->uuid('id')->primary();
             $table->integer('idloai');
             $table->json('noidung');
-            $table->uuid('idhopdong');
+            $table->uuid('idhopdong')->nullable();
             $table->dateTime('ngaylap');
 
             $table->timestamps();

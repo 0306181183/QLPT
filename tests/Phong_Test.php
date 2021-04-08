@@ -113,10 +113,18 @@ class Phong_Test extends TestCase
 
     }
 
-    public function testUpdatePrice(){
+    public function testUpdatePrice1(){
         $input = [
-            'id'=>$this->phongdathue1,
+            'idphong'=>$this->phongdathue1,
             'giaphong' => 3000000,
+        ];
+        $data = [
+          'idloai'=>1,
+            'noidung'=>[
+                'giaphong'=>$input['giaphong'],
+                'idphong'=>$input['idphong']
+            ],
+
         ];
 
 
@@ -124,7 +132,18 @@ class Phong_Test extends TestCase
         $this->seeJsonEquals(['success' => MES::$suagiaphong]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('phong',$input);
+        $this->seeInDatabase('log',$data);
 
+    }
+    public function testUpdatePrice2(){
+        $input = [
+            'idphong'=>$this->phongchuathue1,
+            'giaphong' => 3000000,
+        ];
+        $this->call('POST', 'sua-giaphong', $input);
+        $this->seeJsonEquals(['success' => MES::$suagiaphong]);
+        $this->seeStatusCode(200);
+        $this->seeInDatabase('phong',$input);
     }
 
 
