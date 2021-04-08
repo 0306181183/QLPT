@@ -8,7 +8,7 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     //
-    protected function command_frame($request, $val, $pre, $rep, $name, $success_message, $log_type): JSON
+    protected function command_frame($request, $val, $pre, $rep, $name, $success_message): JSON
     {
         $tmp = $val->$name($request);
         if ($tmp) return $this->invalid_response($tmp);
@@ -17,7 +17,7 @@ class Controller extends BaseController
             $tmp = $pre->$name($request);
             if ($tmp['result'] == True) return $this->conflict_response($tmp['message']);
         }
-        $tmp = $rep->$name($request, $log_type);
+        $tmp = $rep->$name($request);
         if ($tmp) return $this->unexpected_response();
 //        if ($tmp) return $tmp->getMessage();
 
