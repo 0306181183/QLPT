@@ -14,11 +14,7 @@ class DAO_Hopdong
     public function add(DTO_HopDong $dto_hopdong)
     {
         app('db')->table('hopdong')->insert([
-<<<<<<< HEAD
-            'id' => (string)Str::uuid(),
-=======
             'id'=>(string)Str::uuid(),
->>>>>>> 79114fe6c92f07564bcbded6ab6116751ca7e701
             'ngaylap' => date('Y-m-d'),
             'thoihan' => $dto_hopdong->getThoihan(),
             'tiencoc' => $dto_hopdong->getTiencoc(),

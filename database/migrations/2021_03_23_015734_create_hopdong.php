@@ -20,7 +20,6 @@ class CreateHopdong extends Migration
             $table->integer('tiencoc');
             $table->boolean('trangthai')->default(true);
             $table->uuid('idphong');
-
             $table->timestamps();
         });
     }

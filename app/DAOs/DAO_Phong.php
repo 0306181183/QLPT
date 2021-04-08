@@ -36,6 +36,17 @@ class DAO_Phong
         return app('db')->table('phong')->where('id', $id)->first();
     }
 
+    public function isUpdatable(string $id): bool
+    {
+        $doesntExist = app('db')->table('hopdong')->where('idphong', $id)->doesntExist();
+        return $doesntExist;
+    }
+
+    public function compare(int $songuoi):bool
+    {
+        $flag=DB::select
+    }
+
 
 
 
