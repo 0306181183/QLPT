@@ -42,10 +42,7 @@ class DAO_Phong
         return $doesntExist;
     }
 
-    public function compare(int $songuoi):bool
-    {
-        $flag=DB::select
-    }
+
 
 
 

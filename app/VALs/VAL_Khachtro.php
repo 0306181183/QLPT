@@ -7,17 +7,20 @@ namespace App\VALs;
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Routing\ProvidesConvenienceMethods;
 
-class VAL_Phong
+class VAL_Khachtro
 {
     use ProvidesConvenienceMethods;
 
-    public function tao_phong($params)
+    public function tao_khach($params)
     {
         try {
             $this->validate($params, [
-                'tenphong' => 'required|string|max:20',
-                'songuoimax' => 'required|integer|between:0,10',
-                'giaphong' => 'required|integer:between:0,100000000',
+                'tenkhach' => 'required|string|max:100',
+                'CMND' => 'required|integer|unique|min:9|max:12',
+                'ngaysinh ' => 'required|required|date_format:d/m/Y',
+                'quequan' => 'required|string|max:100',
+                'gioitinh'=>'required|boolean',
+                'idhopdong'=>'nullable|uuid|exists:hopdong,idhopdong'
 
             ]);
         } catch (ValidationException $e) {
@@ -27,16 +30,15 @@ class VAL_Phong
         return false;
     }
 
-    public function sua_phong($params)
+    public function sua_khach($params)
     {
         try {
             $this->validate($params, [
-                'id'=>'required|uuid|unique|exists:phong,id',
-                'tenphong' => 'required|string|max:20',
-                'songuoimax' => 'required|integer|between:0,10',
-
-
-
+                'id'=>'required|uuid|unique|exists:khachtro,id',
+                'CMND' => 'required|integer|unique|min:9|max:12',
+                'ngaysinh ' => 'required|required|date_format:d/m/Y',
+                'quequan' => 'required|string|max:100',
+                'gioitinh'=>'required|boolean',
             ]);
         } catch (ValidationException $e) {
             $error_messages = $e->errors();
@@ -45,12 +47,12 @@ class VAL_Phong
         return false;
     }
 
-    public function sua_giaphong($params)
+
+    public function xoa_khach($params)
     {
         try {
             $this->validate($params, [
-                'giaphong' => 'required|integer:between:0,100000000',
-
+                'id'=>'required|uuid|unique|exists:khachtro,id',
             ]);
         } catch (ValidationException $e) {
             $error_messages = $e->errors();
