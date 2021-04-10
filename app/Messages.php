@@ -28,6 +28,6 @@ class Messages
     static string $themxe="Thêm xe thành công";
     static string $xoaxe="Xóa xe thành công";
     static string $suagiadv="Sửa giá dịch vụ";
-    static string $phong_da_co_hop_dong='Phòng đã có trong hợp đồng'
+    static string $phong_da_co_hop_dong='Phòng đã có trong hợp đồng';
 
 }
