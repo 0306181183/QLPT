@@ -4,6 +4,7 @@
 namespace App\DAOs;
 
 use App\DTOs\DTO_Phong;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class DAO_Phong
@@ -36,10 +37,19 @@ class DAO_Phong
         return app('db')->table('phong')->where('id', $id)->first();
     }
 
-    public function isUpdatable(string $id): bool
+    public function ktTonTaiTrongHD(string $id): bool
     {
-        $doesntExist = app('db')->table('hopdong')->where('idphong', $id)->doesntExist();
-        return $doesntExist;
+        $khongTonTai = app('db')->table('hopdong')->where('idphong', $id)->doesntExist();
+        return $khongTonTai;
+    }
+
+    public function soSanhSoNguoi( string $id, int $songuoi):bool
+    {
+        $songuoimax=DB::table('phong')->where('id', $id)->value('songuoimax');
+        if($songuoi<=$songuoimax)
+            return true;
+        else
+            return false;
     }
 
 

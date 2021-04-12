@@ -3,8 +3,9 @@
 
 namespace App\PREs;
 
-
+use Messages as MES;
 use App\DAOs\DAO_Khachtro;
+
 
 class PRE_Khachtro
 {
@@ -14,6 +15,17 @@ class PRE_Khachtro
      {
          $this->dao_khach = $dao_khach;
      }
+
+    public function xoa_khach($params): array
+    {
+        if ($this->dao_khach->ktTonTaiTrongHD($params->id))
+            return ['result' => false, 'message' => Null];
+        return ['result' => True, 'message' => MES::$xoakhach_fail];
+    }
+
+
+
+
 
 
 
