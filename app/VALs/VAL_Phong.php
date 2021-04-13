@@ -34,9 +34,6 @@ class VAL_Phong
                 'id'=>'required|uuid|unique|exists:phong,id',
                 'tenphong' => 'required|string|max:20',
                 'songuoimax' => 'required|integer|between:0,10',
-
-
-
             ]);
         } catch (ValidationException $e) {
             $error_messages = $e->errors();

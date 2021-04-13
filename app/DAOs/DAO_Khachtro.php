@@ -5,6 +5,7 @@ namespace App\DAOs;
 
 
 use App\DTOs\DTO_Khachtro;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
@@ -39,6 +40,16 @@ class DAO_Khachtro
     public function dto_get(string $id)
     {
         return app('db')->table('khachtro')->where('id', $id)->first();
+    }
+
+    public function ktTonTaiTrongHD(string $id): bool
+    {
+        $maHD = DB::table('khachtro')->where('id', $id)->value('idhopdong');
+        if($maHD != null)
+            return false;
+        else
+            return true;
+
     }
 
 

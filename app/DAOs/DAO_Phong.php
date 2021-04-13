@@ -4,6 +4,7 @@
 namespace App\DAOs;
 
 use App\DTOs\DTO_Phong;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class DAO_Phong
@@ -29,21 +30,37 @@ class DAO_Phong
             'trangthai' => $dto_phong->getTrangthai(),
         ]);
     }
-
+    public function form($rc):DTO_Phong
+    {
+        $tmp=new DTO_Phong();
+        $tmp->setId($rc->id);
+        $tmp->setSonguoimax($rc->songuoimax);
+        $tmp->setGiaphong($rc->giaphong);
+        $tmp->setTrangthai($rc->trangthai);
+        $tmp->setTenphong($rc->tenphong);
+        return $tmp;
+    }
     public function dto_get(string $id)
     {
         return app('db')->table('phong')->where('id', $id)->first();
     }
+
+
     public function get_HD(string $idphong) //Kiểm tra xem phòng có hợp đồng hay không
     {
-        return app('db')->table('hopdong')->where('idphong',$idphong)->fist();
+        return app('db')->table('hopdong')->where('idphong',$idphong)->orWhere('trangthai',true)->first;
 
     }
 
-    public function isUpdatable(string $id): bool
+    public function ktTonTaiTrongHD(string $id): bool
     {
-        $doesntExist = app('db')->table('hopdong')->where('idphong', $id)->doesntExist();
-        return $doesntExist;
+        return app('db')->table('hopdong')->where('idphong', $id)->doesntExist();
+    }
+
+    public function soSanhSoNguoi( string $id, int $songuoi):bool
+    {
+        $songuoimax=DB::table('phong')->where('id', $id)->value('songuoimax');
+        return $songuoi<=$songuoimax;
     }
 
 

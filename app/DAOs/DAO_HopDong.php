@@ -7,6 +7,7 @@ namespace App\DAOs;
 
 
 use App\DTOs\DTO_Hopdong;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class DAO_Hopdong
@@ -33,6 +34,24 @@ class DAO_Hopdong
     {
         return app('db')->table('hopdong')->where('id', $id)->first();
     }
+
+//    public function soSanhSoDien( string $id, int $soDien):bool
+//    {
+//
+//    }
+
+    public function soSanhSoNguoi( string $id, int $songuoi):bool
+    {
+        $soNguoi=DB::table('trangthaithue')->where('id', $id)->value('songuoi');
+        if($songuoi>1)
+            return true;
+        else
+            return false;
+    }
+
+
+
+
 
 
 

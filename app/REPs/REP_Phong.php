@@ -11,6 +11,7 @@ use function Symfony\Component\Translation\t;
 class REP_Phong
 {
 
+
     private DAO_Phong $dao_phong;
     private DAO_Log $dao_log;
     public function __construct(DAO_Phong $dao_phong,DAO_Log $dao_log)
@@ -35,12 +36,10 @@ class REP_Phong
     public function sua_phong($request)
     {
         try {
-            $dto_phong =new  DTO_Phong();
-            $dto_phong->setId($request->idphong);
+            $tmp=$this->dao_phong->dto_get($request->idphong);
+            $dto_phong=$this->dao_phong->form($tmp);
             $dto_phong->setTenphong($request->tenphong);
             $dto_phong->setSonguoimax($request->songuoimax);
-            /*$dto_phong->setGiaphong($request->giaphong);*/
-            $dto_phong->setTrangthai(true);
             $this->dao_phong->modify($dto_phong);
         }catch (Exception $e)
         {
@@ -52,8 +51,8 @@ class REP_Phong
     public function mo_phong($request)
     {
         try {
-            $dto_phong =new  DTO_Phong();
-            $dto_phong->setId($request->idphong);
+            $tmp=$this->dao_phong->dto_get($request->idphong);
+            $dto_phong=$this->dao_phong->form($tmp);
             //
             $dto_phong->setTrangthai(true);
             $this->dao_phong->modify($dto_phong);
@@ -66,8 +65,8 @@ class REP_Phong
     public function dong_phong($request)
     {
         try {
-            $dto_phong =new  DTO_Phong();
-            $dto_phong->setId($request->idphong);
+            $tmp=$this->dao_phong->dto_get($request->idphong);
+            $dto_phong=$this->dao_phong->form($tmp);
             //
             $dto_phong->setTrangthai(false);
             $this->dao_phong->modify($dto_phong);
@@ -81,11 +80,11 @@ class REP_Phong
     public function sua_giaphong($request) //chưa chắc chắn
     {
         try {
-            $dto_phong =new  DTO_Phong();
-            $dto_phong->setId($request->idphong);
+            $tmp =$this->dao_phong->dto_get($request->idphong);
+            $dto_phong = $this->dao_phong->form($tmp);
             $dto_phong->setGiaphong($request->giaphong);
-            $hopdong=$this->dao_phong->get_HD($request->idphong);
-            if($hopdong->count()<1)
+            $hopdong=$dto_phong->getHD($dto_phong->getId());
+            if(!$hopdong)
             {
                 $this->dao_phong->modify($dto_phong);
             }
@@ -95,8 +94,8 @@ class REP_Phong
                 $dto_log->setIdloai(1);
                 $dto_log->setIdhopdong($hopdong->id);
                 $dto_log->setNoidung([
-                    'giaphong'=>$request->giaphong,
-                    'idphong'=>$request->idphong
+                    'giaphong'=>$dto_phong->getGiaphong(),
+                    'idphong'=>$dto_phong->getId()
                 ]);
                 app('db')->transaction(
                     function () use ($dto_log,$dto_phong)
@@ -113,4 +112,5 @@ class REP_Phong
         }
         return false;
     }
+
 }
