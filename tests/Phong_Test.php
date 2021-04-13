@@ -87,7 +87,7 @@ class Phong_Test extends TestCase
     public function testCloseFail(){
         $input = [
             'id'=>$this->phongdathue1,
-            'trangthai' => 0,
+
 
         ];
 

@@ -15,7 +15,7 @@ class DAO_Phong
             'tenphong' => $dto_phong->getTenphong(),
             'songuoi_max' => $dto_phong->getSonguoimax(),
             'giaphong' => $dto_phong->getGiaphong(),
-            'trangthai' => $dto_phong->getTrangthai(),
+            'trangthai' => true,
 
         ]);
     }
@@ -27,13 +27,17 @@ class DAO_Phong
             'giaphong' => $dto_phong->getGiaphong(),
             'songuoimax'=>$dto_phong->getSonguoimax(),
             'trangthai' => $dto_phong->getTrangthai(),
-
         ]);
     }
 
     public function dto_get(string $id)
     {
         return app('db')->table('phong')->where('id', $id)->first();
+    }
+    public function get_HD(string $idphong) //Kiểm tra xem phòng có hợp đồng hay không
+    {
+        return app('db')->table('hopdong')->where('idphong',$idphong)->fist();
+
     }
 
     public function isUpdatable(string $id): bool
