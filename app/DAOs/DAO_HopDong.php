@@ -6,6 +6,7 @@ namespace App\DAOs;
 
 
 
+use App\DTOs\DTO_Giadichvu;
 use App\DTOs\DTO_Hopdong;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -35,19 +36,22 @@ class DAO_Hopdong
         return app('db')->table('hopdong')->where('id', $id)->first();
     }
 
-//    public function soSanhSoDien( string $id, int $soDien):bool
-//    {
-//
-//    }
-
-    public function soSanhSoNguoi( string $id, int $songuoi):bool
+    public function form($rc):DTO_Hopdong
     {
-        $soNguoi=DB::table('trangthaithue')->where('id', $id)->value('songuoi');
-        if($songuoi>1)
-            return true;
-        else
-            return false;
+        $tmp=new DTO_Hopdong();
+        $tmp->setId($rc->id);
+        $tmp->setIdphong($rc->idphong);
+        $tmp->setNgaylap($rc->ngaylap);
+        $tmp->setThoihan($rc->thoihan);
+        $tmp->setTiencoc($rc->tiencoc);
+        $tmp->setTrangthai($rc->trangthai);
+        return $tmp;
     }
+
+
+
+
+
 
 
 

@@ -42,14 +42,23 @@ class DAO_Khachtro
         return app('db')->table('khachtro')->where('id', $id)->first();
     }
 
+    public function form($rc):DTO_Khachtro
+    {
+        $tmp=new DTO_Khachtro();
+        $tmp->setId($rc->id);
+        $tmp->setTenkhach($rc->tenkhach);
+        $tmp->setCmnd($rc->cmnd);
+        $tmp->setGioitinh($rc->gioitinh);
+        $tmp->setNgaysinh($rc->ngaysinh);
+        $tmp->setQuequan($rc->quequan);
+        $tmp->setIdhopdong($rc->idhopdong);
+        $tmp->setTrangthai($rc->trangthai);
+        return $tmp;
+    }
+
     public function ktTonTaiTrongHD(string $id): bool
     {
-        $maHD = DB::table('khachtro')->where('id', $id)->value('idhopdong');
-        if($maHD != null)
-            return false;
-        else
-            return true;
-
+        return app('db')->table('khachtro')->where('id', $id)->value('idhopdong');
     }
 
 

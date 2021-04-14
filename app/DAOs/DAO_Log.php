@@ -27,6 +27,17 @@ class DAO_Log
         return app('db')->table('log')->where('id', $id)->first();
     }
 
+    public function form($rc):DTO_Log
+    {
+        $tmp=new DTO_Log();
+        $tmp->setId($rc->id);
+        $tmp->setIdhopdong($rc->idhopdong);
+        $tmp->setNgaylap($rc->ngaylap);
+        $tmp->setIdloai($rc->idloai);
+        $tmp->setNoidung($rc->noidung);
+        return $tmp;
+    }
+
 
 
 

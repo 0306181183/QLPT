@@ -26,6 +26,16 @@ class DAO_Giadichvu
         return app('db')->table('giadichvu')->where('id', $id)->first();
     }
 
+    public function form($rc):DTO_Giadichvu
+    {
+        $tmp=new DTO_Giadichvu();
+        $tmp->setId($rc->id);
+        $tmp->setIdloai($rc->idloai);
+        $tmp->setGiathaydoi($rc->giathaydoi);
+        $tmp->setNgaythaydoi($rc->ngaythaydoi);
+        return $tmp;
+    }
+
 
 
 

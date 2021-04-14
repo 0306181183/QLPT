@@ -17,10 +17,21 @@ class PRE_Phong
 
     public function sua_phong($params): array
     {
-        if ($this->dao_phong->ktTonTaiTrongHD($params->id) && $this->dao_phong->soSanhSoNguoi($params->id,$params->songuoi))
-            return ['result' => false, 'message' => Null];
+        if ($this->dao_phong->ktTonTaiTrongHD($params->id))
+        {
+           $songuoimax=$this->dao_phong->form($this->dao_phong->dto_get($params->id))->getSonguoimax();
+           if($this->dao_phong->soSanhSoNguoi($songuoimax,$params->songuoi))
+               return ['result' => false, 'message' => Null];
+        }
         return ['result' => True, 'message' => MES::$suaphong_fail];
     }
+
+//    public function sua_phong($params): array
+//    {
+//        if ($this->dao_phong->ktTonTaiTrongHD($params->id) && $this->dao_phong->soSanhSoNguoi($params->id,$params->songuoi))
+//            return ['result' => false, 'message' => Null];
+//        return ['result' => True, 'message' => MES::$suaphong_fail];
+//    }
 
     public function dong_phong($params): array
     {

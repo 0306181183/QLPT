@@ -21,16 +21,21 @@ class PRE_Hopdong
 
     public function tao_hopdong($params): array
     {
-        if ( $this->dao_phong->soSanhSoNguoi($params->id,$params->songuoi))
+        $songuoimax=$this->dao_phong->form($this->dao_phong->dto_get($params->id))->getSonguoimax();
+        if($this->dao_phong->soSanhSoNguoi($songuoimax,$params->songuoi))
             return ['result' => false, 'message' => Null];
-        return ['result' => True, 'message' => MES::$taohopdong_fail];
+        return ['result' => True, 'message' => MES::$themnguoivaoHD_fail];
+
+
     }
 
     public function themnguoi_HD($params): array
     {
-        if ( $this->dao_phong->soSanhSoNguoi($params->id,$params->songuoi))
+        $songuoimax=$this->dao_phong->form($this->dao_phong->dto_get($params->id))->getSonguoimax();
+        if($this->dao_phong->soSanhSoNguoi($songuoimax,$params->songuoi))
             return ['result' => false, 'message' => Null];
         return ['result' => True, 'message' => MES::$themnguoivaoHD_fail];
+
     }
 
     public function xoanguoi_HD($params): array

@@ -57,11 +57,14 @@ class DAO_Phong
         return app('db')->table('hopdong')->where('idphong', $id)->doesntExist();
     }
 
-    public function soSanhSoNguoi( string $id, int $songuoi):bool
+    public function soSanhSoNguoi( int $songuoimax, int $input):bool
     {
-        $songuoimax=DB::table('phong')->where('id', $id)->value('songuoimax');
-        return $songuoi<=$songuoimax;
+        return $input<$songuoimax;
     }
+
+
+
+
 
 
 
