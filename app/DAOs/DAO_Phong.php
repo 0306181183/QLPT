@@ -48,18 +48,23 @@ class DAO_Phong
 
     public function get_HD(string $idphong) //Kiểm tra xem phòng có hợp đồng hay không
     {
-        return app('db')->table('hopdong')->where('idphong',$idphong)->orWhere('trangthai',true)->first;
+        return app('db')->table('hopdong')->where('idphong',$idphong)->orWhere('trangthai',true)->first();
 
     }
 
-    public function ktTonTaiTrongHD(string $id): bool
+    public function get_KhachTro(string $idhopdong): bool //Lấy số lượng khách trong 1 hợp đồng của 1 phòng
     {
-        return app('db')->table('hopdong')->where('idphong', $id)->doesntExist();
+        return app('db')->table('khachtro')->where('idhopdong', $idhopdong)->count();
     }
 
     public function soSanhSoNguoi( int $songuoimax, int $input):bool
     {
         return $input<$songuoimax;
+    }
+
+    public function ktXoaNguoi(int $input):bool
+    {
+        return $input<1;
     }
 
 

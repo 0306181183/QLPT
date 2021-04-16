@@ -19,20 +19,17 @@ class PRE_Hopdong
         $this->$dao_phong=$dao_phong;
     }
 
-    public function tao_hopdong($params): array
-    {
-        $songuoimax=$this->dao_phong->form($this->dao_phong->dto_get($params->id))->getSonguoimax();
-        if($this->dao_phong->soSanhSoNguoi($songuoimax,$params->songuoi))
-            return ['result' => false, 'message' => Null];
-        return ['result' => True, 'message' => MES::$themnguoivaoHD_fail];
-
-
-    }
 
     public function themnguoi_HD($params): array
     {
-        $songuoimax=$this->dao_phong->form($this->dao_phong->dto_get($params->id))->getSonguoimax();
-        if($this->dao_phong->soSanhSoNguoi($songuoimax,$params->songuoi))
+        //Lấy ra idphong trong table hopdong
+        $idphong=$this->dao_hopdong->form($this->dao_hopdong->dto_get($params->id))->getIdphong();
+        //Lấy ra songuoimax trong table phong
+        $songuoimax=$this->dao_phong->form($this->dao_phong->dto_get($idphong))->getSonguoimax();
+        //Truy vấn số người hiện tại trong bảng khachtro
+        $songuoihientai=$this->dao_phong->get_KhachTro($params->id);
+        $kq=$songuoihientai+1;
+        if($this->dao_phong->soSanhSoNguoi($songuoimax,$kq))
             return ['result' => false, 'message' => Null];
         return ['result' => True, 'message' => MES::$themnguoivaoHD_fail];
 
@@ -40,7 +37,8 @@ class PRE_Hopdong
 
     public function xoanguoi_HD($params): array
     {
-        if ( $this->dao_hopdong->soSanhSoNguoi($params->id,$params->songuoi))
+        $songuoihientai=$this->dao_phong->get_KhachTro($params->id);
+        if ( $this->dao_phong->ktXoaNguoi($songuoihientai))
             return ['result' => false, 'message' => Null];
         return ['result' => True, 'message' => MES::$xoanguoikhoiHD_fail];
     }
