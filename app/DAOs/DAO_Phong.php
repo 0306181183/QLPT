@@ -43,8 +43,10 @@ class DAO_Phong
     {
         return app('db')->table('phong')->where('id', $id)->first();
     }
-
-
+    public function cout_HD(string $idphong)
+    {
+        return app('db')->table('hopdong')->where('idphong',$idphong)->orWhere('trangthai',true)->count();
+    }
     public function get_HD(string $idphong) //Kiểm tra xem phòng có hợp đồng hay không
     {
         return app('db')->table('hopdong')->where('idphong',$idphong)->orWhere('trangthai',true)->first();

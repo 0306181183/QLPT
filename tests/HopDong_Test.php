@@ -16,9 +16,9 @@ class HopDong_Test extends TestCase
             'tiencoc'=>3000000,
             'idphong'=>$this->phongchuathue1,
             'chisodien'=>124,
-            'idkhach'=>[
-                'khach1'=>$this->khach3,
-                'khach2'=>$this->khach4
+            'khach'=>[
+                ['idkhach'=>$this->khach3],
+                ['khach2'=>$this->khach4]
             ],
         ];
         $data1=[
@@ -167,7 +167,7 @@ class HopDong_Test extends TestCase
         $this->seeJsonEquals(['seccess'=>mess::$thanhtoan]);
         $this->seeStatusCode(200);
     }
-    public function testThemNguoi() 
+    public function testThemNguoi()
     {
         $input=[
             'id'=>$this->hopdong2,

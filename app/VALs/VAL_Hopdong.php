@@ -90,7 +90,7 @@ class VAL_Hopdong
     {
         try {
             $this->validate($params, [
-                'idkhach'=>'required|uuid|unique|exist:khachtro,id',
+                'khach*.*idkhach'=>'required|uuid|unique|exist:khachtro,id',
                 'idhopdong'=>'required|uuid|unique|exist:hopdong,id'
             ]);
         } catch (ValidationException $e) {
@@ -104,7 +104,7 @@ class VAL_Hopdong
     {
         try {
             $this->validate($params, [
-                'idkhach'=>'required|uuid|unique|exist:khachtro,id',
+                'khach*.*idkhach'=>'required|uuid|unique|exist:khachtro,id',
                 'idhopdong'=>'required|uuid|unique|exist:hopdong,id'
             ]);
         } catch (ValidationException $e) {

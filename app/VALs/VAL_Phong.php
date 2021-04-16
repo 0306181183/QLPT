@@ -31,7 +31,7 @@ class VAL_Phong
     {
         try {
             $this->validate($params, [
-                'id'=>'required|uuid|unique|exists:phong,id',
+                'id'=>'uuid|unique|exists:phong,id',
                 'tenphong' => 'required|string|max:20',
                 'songuoimax' => 'required|integer|between:0,10',
             ]);
