@@ -6,7 +6,7 @@ use App\PREs\PRE_Xe;
 use App\REPs\REP_Xe;
 use App\VALs\VAL_Xe;
 use Illuminate\Http\Request;
-use Messages as MES;
+use App\Mes as MES;
 use PHPUnit\Util\Json;
 
 class XeController extends Controller

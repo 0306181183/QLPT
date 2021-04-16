@@ -7,7 +7,7 @@ use App\PREs\PRE_Hopdong;
 use App\REPs\REP_Hopdong;
 use App\VALs\VAL_Hopdong;
 use Illuminate\Http\Request;
-use Messages as MES;
+use App\Mes as MES;
 use PHPUnit\Util\Json;
 class HopdongController extends Controller
 {

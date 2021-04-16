@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers;
 use App\PREs\PRE_Dichvu;
-use Messages as MES;
+use App\Mes as MES;
 use App\REPs\REP_Dichvu;
 use App\VALs\VAL_Giadichvu;
 use Illuminate\Http\Request;

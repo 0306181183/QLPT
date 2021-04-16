@@ -3,7 +3,7 @@
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use Laravel\Lumen\Testing\WithoutMiddleware;
-use Messages as MES;
+use app\Mes as MES;
 class Xe_Test extends TestCase
 {
     use DatabaseTransactions;

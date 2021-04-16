@@ -35,7 +35,10 @@ class DAO_Hopdong
     {
         return app('db')->table('hopdong')->where('id', $id)->first();
     }
-
+    public function dto_idphong(string $idphong)
+    {
+        return app('db')->table('hopdong')->where('idphong',$idphong)->orWhere('trangthai',true)->first();
+    }
     public function form($rc):DTO_Hopdong
     {
         $tmp=new DTO_Hopdong();

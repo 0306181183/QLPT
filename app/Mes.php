@@ -1,7 +1,10 @@
 <?php
 
 
-class Messages
+namespace App;
+
+
+class Mes
 {
     static string $taophong="Tạo phòng thành công";
     static string $suaphong="Sửa phòng thành công";
@@ -28,6 +31,7 @@ class Messages
     static string $themxe="Thêm xe thành công";
     static string $xoaxe="Xóa xe thành công";
     static string $suagiadv="Sửa giá dịch vụ";
-
-
+    private static $query_success_status_code="";
+    public static $conflict="Lỗi hệ thống";
+    public static $unexpected="Lỗi không xác định";
 }

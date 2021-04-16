@@ -28,7 +28,14 @@ class DAO_Xe
     {
         return app('db')->table('xe')->where('id', $id)->first();
     }
-
+    public function get_idkhach(string $idkhach)
+    {
+        return app('db')->table('xe')->where('idkhach',$idkhach);
+    }
+    public function remove_idkhach(string $idkhach)
+    {
+        app('db')->table('xe')->where('idkhach',$idkhach)->delete();
+    }
     public function form($rc):DTO_Xe
     {
         $tmp=new DTO_Xe();

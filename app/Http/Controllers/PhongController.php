@@ -3,7 +3,7 @@
 
 
 namespace App\Http\Controllers;
-use Messages as MES;
+use App\Mes as MES;
 use App\PREs\PRE_Phong;
 use App\REPs\REP_Phong;
 use App\VALs\VAL_Phong;
@@ -16,13 +16,13 @@ class PhongController extends Controller
     private REP_Phong $rep;
     private PRE_Phong $pre;
 
-    public function __construct(VAL_Bag $val, REP_Bag $rep, PRE_Bag $pre)
+    public function __construct(VAL_Phong $val, REP_Phong $rep, PRE_Phong $pre)
     {
         $this->val = $val;
         $this->rep = $rep;
         $this->pre = $pre;
     }
-    public function tao_phong(Request $request): Json
+    public function tao_phong(Request $request)
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'tao_phong', MES::$taophong);
     }

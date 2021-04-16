@@ -3,7 +3,7 @@
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use Laravel\Lumen\Testing\WithoutMiddleware;
-use Messages as mess;
+use app\Mes as mess;
 
 class Khachtro_Test extends TestCase
 {

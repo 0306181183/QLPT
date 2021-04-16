@@ -19,8 +19,8 @@ class VAL_Hopdong
                 'tiencoc' => 'required|integer|between:0,100000000',
                 'idphong ' => 'required|uuid|unique|uuid|exist:phong,id',
                 'chisodien' => 'required|integer|between:0,100000',
-                'idkhach'=>'required|uuid|unique|exists:khach,id',
-                'idxe'=>'required|uuid|unique|exists:xe,id'
+                'khach.*.idkhach'=>'required|uuid|unique|exists:khach,id',
+
 
             ]);
         } catch (ValidationException $e) {

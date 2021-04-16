@@ -26,9 +26,9 @@ class DAO_Phieuthu
             'ngaylap'=>date('Y-m-d')
         ]);
     }
-    public function modify(DTO_Phieuthu $dto_phieuthu)
+    public function modify(string $id)
     {
-        app('db')->table('phieuthu')->where('id', $dto_phieuthu->getId())->update([
+        app('db')->table('phieuthu')->where('id', $id)->update([
             'trangthai' => false,
         ]);
     }

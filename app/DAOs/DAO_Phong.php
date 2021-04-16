@@ -14,10 +14,9 @@ class DAO_Phong
         app('db')->table('phong')->insert([
             'id'=>(string)Str::uuid(),
             'tenphong' => $dto_phong->getTenphong(),
-            'songuoi_max' => $dto_phong->getSonguoimax(),
+            'songuoimax' => $dto_phong->getSonguoimax(),
             'giaphong' => $dto_phong->getGiaphong(),
             'trangthai' => true,
-
         ]);
     }
 

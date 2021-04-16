@@ -3,7 +3,7 @@
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use Laravel\Lumen\Testing\WithoutMiddleware;
-use Messages as MESS;
+use app\Mes as MESS;
 class Dichvu_Test extends TestCase
 {
     use DatabaseTransactions;

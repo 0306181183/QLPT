@@ -3,7 +3,7 @@
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use Laravel\Lumen\Testing\WithoutMiddleware;
-use Messages as mess;
+use app\Mes as mess;
 
 class HopDong_Test extends TestCase
 {
@@ -167,7 +167,7 @@ class HopDong_Test extends TestCase
         $this->seeJsonEquals(['seccess'=>mess::$thanhtoan]);
         $this->seeStatusCode(200);
     }
-    public function testThemNguoi() //chưa sửa
+    public function testThemNguoi() 
     {
         $input=[
             'id'=>$this->hopdong2,

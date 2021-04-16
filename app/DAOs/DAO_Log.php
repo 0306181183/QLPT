@@ -4,8 +4,6 @@
 namespace App\DAOs;
 
 
-
-
 use App\DTOs\DTO_Log;
 use Illuminate\Support\Str;
 

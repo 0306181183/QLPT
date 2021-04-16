@@ -4,7 +4,7 @@ use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use Laravel\Lumen\Testing\WithoutMiddleware;
 
-use Messages as MES;
+use App\Mes as MES;
 
 class Phong_Test extends TestCase
 {
@@ -22,8 +22,6 @@ class Phong_Test extends TestCase
         $this->seeJsonEquals(['success' => MES::$taophong]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('phong',$input);
-
-
     }
 
     public function testUpdate()

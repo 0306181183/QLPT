@@ -7,7 +7,7 @@ use App\PREs\PRE_Khachtro;
 use App\REPs\REP_Khachtro;
 use App\VALs\VAL_Khachtro;
 use Illuminate\Http\Request;
-use Messages as MES;
+use App\Mes as MES;
 use PHPUnit\Util\Json;
 
 class KhachtroController extends Controller
