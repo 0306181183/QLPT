@@ -43,12 +43,12 @@ class Controller extends BaseController
         return response()->json($tmp, MES::$query_success_status_code);
     }*/
 
-    protected function invalid_response($error_message): JSON
+    protected function invalid_response($error_message)
     {
         return response()->json(['invalid' => $error_message], 400);
     }
 
-    protected function conflict_response($message): JSON
+    protected function conflict_response($message)
     {
         $message = $message == Null ? MES::$conflict : $message;
         return response()->json(['conflict' => $message], 409);
