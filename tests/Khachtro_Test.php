@@ -15,15 +15,17 @@ class Khachtro_Test extends TestCase
           'tenkhach'=>'Võ Văn A',
             'cmnd'=>'12345678904',
             'gioitinh'=>true,
-            'ngaysinh'=>'2000/2/12',
+            'ngaysinh'=>'2000-02-12',
             'quequan'=>'Tp.HCM',
         ];
         $data=[
-            'tenkhach'=>'Võ Văn A',
-            'cmnd'=>'12345678904',
-            'ngaysinh'=>'2000/2/12',
-            'quequan'=>'Tp.HCM',
-            'gioitinh'=>true,
+
+
+            'tenkhach'=>$input['tenkhach'],
+            'cmnd'=>$input['cmnd'],
+            'gioitinh'=>$input['gioitinh'],
+            'ngaysinh'=>$input['ngaysinh'],
+            'quequan'=>$input['quequan'],
             'trangthai'=>true
         ];
         $this->call('POST','tao-khach',$input);
@@ -35,27 +37,35 @@ class Khachtro_Test extends TestCase
     public  function  testUpdate()
     {
         $input=[
-            'id'=>$this->khach1,
+            'idkhach'=>$this->khach1,
             'tenkhach'=>'Võ Văn B',
             'cmnd'=>'12345678904',
             'gioitinh'=>true,
             'ngaysinh'=>'2000/2/11',
             'quequan'=>'Tp.HCM'
         ];
+        $data=[
+            'id'=>$input['idkhach'],
+            'tenkhach'=>$input['tenkhach'],
+            'cmnd'=>$input['cmnd'],
+            'gioitinh'=>$input['gioitinh'],
+            'ngaysinh'=>$input['ngaysinh'],
+            'quequan'=>$input['quequan']
+        ];
 
         $this->call('POST','sua-khach',$input);
         $this->seeJsonEquals(['seccess'=>mess::$suakhach]);
         $this->seeStatusCode(200);
-        $this->seeInDatabase('khachtro',$input);
+        $this->seeInDatabase('khachtro',$data);
 
     }
     public  function  testDelete()
     {
         $input=[
-            'id'=>$this->khach3
+            'idkhach'=>$this->khach3
         ];
         $data=[
-           'id'=>$input['id'],
+           'id'=>$input['idkhach'],
             'trangthai'=>false
         ];
         $this->call('POST','xoa-khach',$input);
@@ -66,7 +76,7 @@ class Khachtro_Test extends TestCase
     public function testDelete_fail()
     {
         $input=[
-          'id'=>$this->khach1
+          'idkhach'=>$this->khach1
         ];
         $this->call('POST','xoa-khach',$input);
         $this->seeJsonEquals(['conflict'=>mess::$xoakhach_fail]);

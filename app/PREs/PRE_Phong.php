@@ -21,8 +21,7 @@ class PRE_Phong
     {
 
 
-
-        if ($this->dao_phong->cout_HD($params->idphong)==0)
+        if ($this->dao_phong->count_HD($params->idphong)!=0)
         {
             $dto_hopdong=$this->dao_hopdong->form($this->dao_phong->get_HD($params->idphong));
             $songuoihientai=$this->dao_phong->get_KhachTro($dto_hopdong->getId());
@@ -30,7 +29,7 @@ class PRE_Phong
            if($songuoihientai<$songuoimax)
                return ['result' => false, 'message' => null];
            else
-               return ['result' => True, 'message' => MES::$suaphong_fail];
+               return ['result' => true, 'message' => MES::$suaphong_fail];
         }
         return ['result' => false, 'message' => null];
 
@@ -38,11 +37,14 @@ class PRE_Phong
     }
 
 
+
     public function dong_phong($params): array
     {
-        if ($this->dao_phong->get_HD($params->id))
-            return ['result' => false, 'message' => Null];
-        return ['result' => True, 'message' => MES::$dongphong_fail];
+        if ($this->dao_phong->count_HD($params->idphong)!=0)
+            return ['result' => True, 'message' => MES::$dongphong_fail];
+        return ['result' => false, 'message' => null];
+
+
     }
 
 

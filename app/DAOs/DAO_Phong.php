@@ -43,30 +43,24 @@ class DAO_Phong
     {
         return app('db')->table('phong')->where('id', $id)->first();
     }
-    public function cout_HD(string $idphong)
+    public function count_HD(string $idphong)
     {
-        return app('db')->table('hopdong')->where('idphong',$idphong)->orWhere('trangthai',true)->count();
+        return app('db')->table('hopdong')->where('idphong',$idphong)->count();
     }
     public function get_HD(string $idphong) //Kiểm tra xem phòng có hợp đồng hay không
     {
-        return app('db')->table('hopdong')->where('idphong',$idphong)->orWhere('trangthai',true)->first();
+        return app('db')->table('hopdong')->where('idphong',$idphong)->first();
 
     }
 
-    public function get_KhachTro(string $idhopdong): bool //Lấy số lượng khách trong 1 hợp đồng của 1 phòng
+    public function get_KhachTro(string $idhopdong) //Lấy số lượng khách trong 1 hợp đồng của 1 phòng
     {
         return app('db')->table('khachtro')->where('idhopdong', $idhopdong)->count();
     }
 
-    public function soSanhSoNguoi( int $songuoimax, int $input):bool
-    {
-        return $input<$songuoimax;
-    }
 
-    public function ktXoaNguoi(int $input):bool
-    {
-        return $input<1;
-    }
+
+
 
 
 

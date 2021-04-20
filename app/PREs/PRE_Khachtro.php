@@ -18,9 +18,9 @@ class PRE_Khachtro
 
     public function xoa_khach($params): array
     {
-        if ($this->dao_khach->ktTonTaiTrongHD($params->id))
-            return ['result' => false, 'message' => Null];
-        return ['result' => True, 'message' => MES::$xoakhach_fail];
+        if ($this->dao_khach->ktTonTaiTrongHD($params->id)!=null)
+            return ['result' => True, 'message' => MES::$xoakhach_fail];
+        return ['result' => false, 'message' => Null];
     }
 
 

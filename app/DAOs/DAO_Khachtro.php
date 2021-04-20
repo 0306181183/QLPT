@@ -56,7 +56,7 @@ class DAO_Khachtro
         return $tmp;
     }
 
-    public function ktTonTaiTrongHD(string $id): bool
+    public function ktTonTaiTrongHD(string $id)
     {
         return app('db')->table('khachtro')->where('id', $id)->value('idhopdong');
     }

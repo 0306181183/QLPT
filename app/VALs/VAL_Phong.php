@@ -31,7 +31,7 @@ class VAL_Phong
     {
         try {
             $this->validate($params, [
-                'id'=>'uuid|unique|exists:phong,id',
+                'idphong'=>'uuid|exists:phong,id',
                 'tenphong' => 'required|string|max:20',
                 'songuoimax' => 'required|integer|between:0,10',
             ]);
@@ -46,8 +46,32 @@ class VAL_Phong
     {
         try {
             $this->validate($params, [
+                'idphong'=>'uuid|exists:phong,id',
                 'giaphong' => 'required|integer:between:0,100000000',
-
+            ]);
+        } catch (ValidationException $e) {
+            $error_messages = $e->errors();
+            return (string)array_shift($error_messages)[0];
+        }
+        return false;
+    }
+    public function mo_phong($params)
+    {
+        try {
+            $this->validate($params, [
+                'idphong'=>'uuid|exists:phong,id',
+            ]);
+        } catch (ValidationException $e) {
+            $error_messages = $e->errors();
+            return (string)array_shift($error_messages)[0];
+        }
+        return false;
+    }
+    public function dong_phong($params)
+    {
+        try {
+            $this->validate($params, [
+                'idphong'=>'uuid|exists:phong,id',
             ]);
         } catch (ValidationException $e) {
             $error_messages = $e->errors();

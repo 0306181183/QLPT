@@ -21,7 +21,7 @@ class KhachtroController extends Controller
         $this->rep = $rep;
         $this->pre = $pre;
     }
-    public function tao_khach(Request $request) :Json
+    public function tao_khach(Request $request)
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'tao_khach', MES::$taokhach);
     }

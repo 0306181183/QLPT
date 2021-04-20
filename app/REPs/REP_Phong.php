@@ -1,6 +1,7 @@
 <?php
 namespace App\REPs;
 
+use App\DAOs\DAO_Hopdong;
 use App\DAOs\DAO_Log;
 use App\DAOs\DAO_Phong;
 use App\DTOs\DTO_Log;
@@ -14,10 +15,12 @@ class REP_Phong
 
     private DAO_Phong $dao_phong;
     private DAO_Log $dao_log;
-    public function __construct(DAO_Phong $dao_phong,DAO_Log $dao_log)
+    private DAO_Hopdong $dao_hopdong;
+    public function __construct(DAO_Phong $dao_phong,DAO_Log $dao_log,DAO_Hopdong $dao_hopdong)
     {
         $this->dao_phong=$dao_phong;
         $this->dao_log=$dao_log;
+        $this->dao_hopdong=$dao_hopdong;
     }
     public function  tao_phong($request)
     {
@@ -83,19 +86,16 @@ class REP_Phong
             $tmp =$this->dao_phong->dto_get($request->idphong);
             $dto_phong = $this->dao_phong->form($tmp);
             $dto_phong->setGiaphong($request->giaphong);
-            $hopdong=$dto_phong->getHD($dto_phong->getId());
-            if(!$hopdong)
-            {
-                $this->dao_phong->modify($dto_phong);
-            }
-            else
+            $tam=$dto_phong->getHD($dto_phong->getId());
+            $hopdong=$this->dao_hopdong->form($tam);
+            if($this->dao_phong->count_HD($request->idphong)!=0)
             {
                 $dto_log=new DTO_Log();
                 $dto_log->setIdloai(1);
-                $dto_log->setIdhopdong($hopdong->id);
+                $dto_log->setIdhopdong($hopdong->getId());
                 $dto_log->setNoidung([
+                    'idphong'=>$dto_phong->getId(),
                     'giaphong'=>$dto_phong->getGiaphong(),
-                    'idphong'=>$dto_phong->getId()
                 ]);
                 app('db')->transaction(
                     function () use ($dto_log,$dto_phong)
@@ -104,6 +104,10 @@ class REP_Phong
                         $this->dao_log->add($dto_log);
                     }
                 );
+            }
+            else
+            {
+                $this->dao_phong->modify($dto_phong);
 
             }
         }catch (Exception $e)
