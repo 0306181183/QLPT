@@ -12,15 +12,12 @@ class Dichvu_Test extends TestCase
     public function testUpdate()
     {
         $input = [
-            'loaidichvu' => 1,
-            'giathaydoi' => 3500,
-
+            'idloai' => 1,
+            'giathaydoi' => 3567,
         ];
-
         $this->call('POST', 'sua-giadv', $input);
         $this->seeJsonEquals(['success' => MESS::$suagiadv]);
         $this->seeStatusCode(200);
-
         $this->seeInDatabase('giadichvu', $input);
     }
 

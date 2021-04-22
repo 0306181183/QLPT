@@ -5,6 +5,7 @@ namespace App\DAOs;
 
 
 use App\DTOs\DTO_Log;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class DAO_Log
@@ -16,8 +17,9 @@ class DAO_Log
             'idloai'=>$dto_log->getIdloai(),
             'noidung'=>json_encode($dto_log->getNoidung()),
             'idhopdong'=>$dto_log->getIdhopdong(),
-            'ngaylap'=>date('Y-m-d H:i:s')
+            'ngaylap'=>Carbon::now(),
         ]);
+
     }
 
     public function dto_get(string $id)

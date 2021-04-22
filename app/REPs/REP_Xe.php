@@ -27,8 +27,10 @@ class REP_Xe
             $dto_xe->setBienso($request->bienso);
             $dto_xe->setLoaixe($request->loaixe);
             $dto_khach=$this->dao_khach->form($this->dao_khach->dto_get($request->idkhach));
+
             if(!$dto_khach->getIdhopdong())
             {
+
                 $this->dao_xe->add($dto_xe);
             }
             else

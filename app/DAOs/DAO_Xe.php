@@ -11,11 +11,13 @@ use Illuminate\Support\Str;
 class DAO_Xe
 {
     public function add(DTO_Xe $dto_xe){
+
         app('db')->table('xe')->insert([
             'id'=>(string)Str::uuid(),
             'loaixe' => $dto_xe->getLoaixe(),
             'bienso' => $dto_xe->getBienso(),
             'idkhach' => $dto_xe->getIdkhach(),
+
         ]);
     }
 

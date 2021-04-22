@@ -29,7 +29,7 @@ class Xe_Test extends TestCase
         $this->seeJsonEquals(['success' => MES::$themxe]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('xe',$input);
-        $this->seeInDatabase('log',$data);
+       $this->seeInDatabase('log',$data);
     }
     //Không có hợp đồng
     public function testCreate2(){
@@ -67,11 +67,14 @@ class Xe_Test extends TestCase
         $input = [
             'idxe'=>$this->xe2,
         ];
+        $data=[
+            'id'=>$input['idxe'],
+        ];
 
         $this->call('POST', 'xoa-xe', $input);
         $this->seeJsonEquals(['success' => MES::$xoaxe]);
         $this->seeStatusCode(200);
-        $this->notSeeInDatabase('xe',$input);
+        $this->notSeeInDatabase('xe',$data);
     }
 
 
