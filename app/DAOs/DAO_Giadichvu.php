@@ -7,6 +7,7 @@ namespace App\DAOs;
 
 
 use App\DTOs\DTO_Giadichvu;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class DAO_Giadichvu
@@ -16,8 +17,8 @@ class DAO_Giadichvu
         app('db')->table('giadichvu')->insert([
             'id'=>(string)Str::uuid(),
             'idloai' => $dto_giadv->getIdloai(),
-            'giathaydoi' => $dto_giadv->getNgaythaydoi(),
-            'ngaythaydoi' => date('Y-m-d'),
+            'giathaydoi' => $dto_giadv->getGiathaydoi(),
+            'ngaythaydoi' => Carbon::now(),
         ]);
     }
 

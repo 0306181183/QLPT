@@ -17,7 +17,8 @@ class VAL_Xe
             $this->validate($params, [
                 'loaixe' => 'required|string|max:20',
                 'bienso' => 'required|string|min:7|max:10',
-                'idkhach' => 'required|uuid|unique|exist:khachtro,id',
+                'idkhach' => 'uuid|exists:khachtro,id',
+
 
             ]);
         } catch (ValidationException $e) {
@@ -31,8 +32,8 @@ class VAL_Xe
     {
         try {
             $this->validate($params, [
-                'id'=>'required|unique|uuid|exist:xe,id',
-                'idhopdong'=>'required|uuid|unique|exist:hopdong,id',
+                'idxe'=>'required|uuid|exists:xe,id',
+                'idhopdong'=>'uuid|exists:hopdong,id',
 
             ]);
         } catch (ValidationException $e) {

@@ -20,11 +20,11 @@ class XeController extends Controller
         $this->rep = $rep;
         $this->pre = $pre;
     }
-    public function them_xe(Request $request) :Json
+    public function them_xe(Request $request)
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'them_xe', MES::$themxe);
     }
-    public function xoa_xe(Request $request) :Json
+    public function xoa_xe(Request $request)
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'xoa_xe', MES::$xoaxe);
     }

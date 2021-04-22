@@ -22,7 +22,7 @@ class DichvuController extends Controller
         $this->rep = $rep;
         $this->pre = $pre;
     }
-    public function sua_giadv(Request $request) :Json
+    public function sua_giadv(Request $request)
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'sua_giadv', MES::$suagiadv);
     }
