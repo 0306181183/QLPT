@@ -45,4 +45,13 @@ abstract class TestCase extends BaseTestCase
 
         return require __DIR__.'/../bootstrap/app.php';
     }
+    protected function compareLog($log):bool
+    {
+        $db_log=app('db')->table('log')->orderBy('ngaylap','desc')->first();
+        $db_log->noidung=json_decode($db_log->noidung,true);
+        if($log['idhopdong']!=$db_log->idhopdong) return false;
+        if($log['idloai']!=$db_log->idloai) return false;
+        if($log['noidung']!=$db_log->noidung) return false;
+        return true;
+    }
 }

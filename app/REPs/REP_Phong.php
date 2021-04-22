@@ -83,13 +83,14 @@ class REP_Phong
     public function sua_giaphong($request) //chưa chắc chắn
     {
         try {
+
             $tmp =$this->dao_phong->dto_get($request->idphong);
             $dto_phong = $this->dao_phong->form($tmp);
             $dto_phong->setGiaphong($request->giaphong);
-            $tam=$dto_phong->getHD($dto_phong->getId());
-            $hopdong=$this->dao_hopdong->form($tam);
             if($this->dao_phong->count_HD($request->idphong)!=0)
             {
+                $tam=$this->dao_phong->get_HD($dto_phong->getId());
+                $hopdong=$this->dao_hopdong->form($tam);
                 $dto_log=new DTO_Log();
                 $dto_log->setIdloai(1);
                 $dto_log->setIdhopdong($hopdong->getId());

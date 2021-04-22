@@ -20,8 +20,6 @@ class Khachtro_Test extends TestCase
             'quequan' => 'Tp.HCM',
         ];
         $data = [
-
-
             'tenkhach' => $input['tenkhach'],
             'cmnd' => $input['cmnd'],
             'gioitinh' => $input['gioitinh'],

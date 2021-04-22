@@ -131,9 +131,8 @@ class Phong_Test extends TestCase
             'noidung'=>[
                 'idphong'=>$input['idphong'],
                 'giaphong'=>$input['giaphong'],
-
-            ],
-
+                ],
+            'idhopdong'=>$this->hopdong
         ];
 
 
@@ -141,7 +140,7 @@ class Phong_Test extends TestCase
         $this->seeJsonEquals(['success' => MES::$suagiaphong]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('phong',$data);
-        $this->seeInDatabase('log',$data1);
+        $this->assertTrue($this->compareLog($data1));
 
     }
     public function testUpdatePrice2(){
