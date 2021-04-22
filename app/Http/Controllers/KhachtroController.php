@@ -25,11 +25,11 @@ class KhachtroController extends Controller
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'tao_khach', MES::$taokhach);
     }
-    public function sua_khach(Request $request) :Json
+    public function sua_khach(Request $request)
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'sua_khach', MES::$suakhach);
     }
-    public function  xoa_khach(Request $request):Json
+    public function  xoa_khach(Request $request)
     {
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'xoa_khach', MES::$xoakhach);
     }

@@ -18,7 +18,7 @@ class HopDong_Test extends TestCase
             'chisodien'=>124,
             'khach'=>[
                 ['idkhach'=>$this->khach3],
-                ['khach2'=>$this->khach4]
+                ['idkhach'=>$this->khach4]
             ],
         ];
         $data1=[
@@ -68,7 +68,7 @@ class HopDong_Test extends TestCase
             'idphong'=>$this->phongchuathue1,
             'chisodien'=>124,
             'idkhach'=>[
-                'khach2'=>$this->khach4
+                ['khach2'=>$this->khach4]
             ],
         ];
         $data1=[

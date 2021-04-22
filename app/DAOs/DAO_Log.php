@@ -14,7 +14,7 @@ class DAO_Log
         app('db')->table('log')->insert([
             'id'=>(string)Str::uuid(),
             'idloai'=>$dto_log->getIdloai(),
-            'noidung'=>$dto_log->getNoidung(),
+            'noidung'=>json_encode($dto_log->getNoidung()),
             'idhopdong'=>$dto_log->getIdhopdong(),
             'ngaylap'=>date('Y-m-d H:i:s')
         ]);
@@ -32,7 +32,7 @@ class DAO_Log
         $tmp->setIdhopdong($rc->idhopdong);
         $tmp->setNgaylap($rc->ngaylap);
         $tmp->setIdloai($rc->idloai);
-        $tmp->setNoidung($rc->noidung);
+        $tmp->setNoidung(json_decode($rc->noidung,1));
         return $tmp;
     }
 

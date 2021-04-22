@@ -9,77 +9,81 @@ class Khachtro_Test extends TestCase
 {
     use DatabaseTransactions;
     use WithoutMiddleware;
+
     public function testCreate()
     {
-        $input=[
-          'tenkhach'=>'Võ Văn A',
-            'cmnd'=>'12345678904',
-            'gioitinh'=>true,
-            'ngaysinh'=>'2000-02-12',
-            'quequan'=>'Tp.HCM',
+        $input = [
+            'tenkhach' => 'Võ Văn A',
+            'cmnd' => '12345678904',
+            'gioitinh' => true,
+            'ngaysinh' => '2000-02-12',
+            'quequan' => 'Tp.HCM',
         ];
-        $data=[
+        $data = [
 
 
-            'tenkhach'=>$input['tenkhach'],
-            'cmnd'=>$input['cmnd'],
-            'gioitinh'=>$input['gioitinh'],
-            'ngaysinh'=>$input['ngaysinh'],
-            'quequan'=>$input['quequan'],
-            'trangthai'=>true
+            'tenkhach' => $input['tenkhach'],
+            'cmnd' => $input['cmnd'],
+            'gioitinh' => $input['gioitinh'],
+            'ngaysinh' => $input['ngaysinh'],
+            'quequan' => $input['quequan'],
+            'trangthai' => true
         ];
-        $this->call('POST','tao-khach',$input);
-        $this->seeJsonEquals(['success'=>mess::$taokhach]);
+        $this->call('POST', 'tao-khach', $input);
+        $this->seeJsonEquals(['success' => mess::$taokhach]);
         $this->seeStatusCode(200);
-        $this->seeInDatabase('khachtro',$data);
+        $this->seeInDatabase('khachtro', $data);
 
     }
-    public  function  testUpdate()
+
+    public function testUpdate()
     {
-        $input=[
-            'idkhach'=>$this->khach1,
-            'tenkhach'=>'Võ Văn B',
-            'cmnd'=>'12345678904',
-            'gioitinh'=>true,
-            'ngaysinh'=>'2000/2/11',
-            'quequan'=>'Tp.HCM'
+        $input = [
+            'idkhach' => $this->khach1,
+            'tenkhach' => 'Võ Văn B',
+            'cmnd' => '12345678904',
+            'gioitinh' => true,
+            'ngaysinh' => '2000/2/11',
+            'quequan' => 'Tp.HCM'
         ];
-        $data=[
-            'id'=>$input['idkhach'],
-            'tenkhach'=>$input['tenkhach'],
-            'cmnd'=>$input['cmnd'],
-            'gioitinh'=>$input['gioitinh'],
-            'ngaysinh'=>$input['ngaysinh'],
-            'quequan'=>$input['quequan']
+        $data = [
+            'id' => $input['idkhach'],
+            'tenkhach' => $input['tenkhach'],
+            'cmnd' => $input['cmnd'],
+            'gioitinh' => $input['gioitinh'],
+            'ngaysinh' => $input['ngaysinh'],
+            'quequan' => $input['quequan']
         ];
 
-        $this->call('POST','sua-khach',$input);
-        $this->seeJsonEquals(['seccess'=>mess::$suakhach]);
+        $this->call('POST', 'sua-khach', $input);
+        $this->seeJsonEquals(['success' => mess::$suakhach]);
         $this->seeStatusCode(200);
-        $this->seeInDatabase('khachtro',$data);
+        $this->seeInDatabase('khachtro', $data);
 
     }
-    public  function  testDelete()
+
+    public function testDelete()
     {
-        $input=[
-            'idkhach'=>$this->khach3
+        $input = [
+            'idkhach' => $this->khach3
         ];
-        $data=[
-           'id'=>$input['idkhach'],
-            'trangthai'=>false
+        $data = [
+            'id' => $input['idkhach'],
+            'trangthai' => false
         ];
-        $this->call('POST','xoa-khach',$input);
-        $this->seeJsonEquals(['seccess'=>mess::$xoakhach]);
+        $this->call('POST', 'xoa-khach', $input);
+        $this->seeJsonEquals(['success' => mess::$xoakhach]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('khachtro', $data);
     }
+
     public function testDelete_fail()
     {
-        $input=[
-          'idkhach'=>$this->khach1
+        $input = [
+            'idkhach' => $this->khach1
         ];
-        $this->call('POST','xoa-khach',$input);
-        $this->seeJsonEquals(['conflict'=>mess::$xoakhach_fail]);
+        $this->call('POST', 'xoa-khach', $input);
+        $this->seeJsonEquals(['conflict' => mess::$xoakhach_fail]);
         $this->seeStatusCode(409);
     }
 
