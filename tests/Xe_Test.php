@@ -22,14 +22,15 @@ class Xe_Test extends TestCase
             'idloai'=>4,
             'noidung'=>[
                 'idkhach'=>$input['idkhach']
-            ]
+            ],
+            'idhopdong'=>$this->hopdong_xe,
         ];
 
         $this->call('POST', 'them-xe', $input);
         $this->seeJsonEquals(['success' => MES::$themxe]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('xe',$input);
-       $this->seeInDatabase('log',$data);
+       $this->assertTrue($this->compareLog($data));
     }
     //Không có hợp đồng
     public function testCreate2(){
@@ -51,17 +52,23 @@ class Xe_Test extends TestCase
             'idxe'=>$this->xe1,
         ];
         $data=[
+            'id'=>$input['idxe'],
+        ];
+        $data_log=[
             'idloai'=>5,
             'noidung'=>[
-                'idxe'=>$input['idxe']
-            ]
+                'idkhach'=>$this->khach1,
+            ],
+            'idhopdong'=>$this->hopdong,
+
         ];
 
         $this->call('POST', 'xoa-xe', $input);
         $this->seeJsonEquals(['success' => MES::$xoaxe]);
         $this->seeStatusCode(200);
-        $this->notSeeInDatabase('xe',$input);
-        $this->seeInDatabase('log',$data);
+        $this->notSeeInDatabase('xe',$data);
+        $this->assertTrue($this->compareLog($data_log));
+
     }
     public function testDelete2(){
         $input = [
