@@ -50,9 +50,7 @@ class DAO_Phong
     public function get_HD(string $idphong) //Kiểm tra xem phòng có hợp đồng hay không
     {
         return app('db')->table('hopdong')->where('idphong',$idphong)->first();
-
     }
-
     public function get_KhachTro(string $idhopdong) //Lấy số lượng khách trong 1 hợp đồng của 1 phòng
     {
         return app('db')->table('khachtro')->where('idhopdong', $idhopdong)->count();

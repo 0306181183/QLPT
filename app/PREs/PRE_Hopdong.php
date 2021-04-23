@@ -6,7 +6,7 @@ namespace App\PREs;
 
 use App\DAOs\DAO_Hopdong;
 use App\DAOs\DAO_Phong;
-use Messages as MES;
+use App\Mes as MES;
 
 class PRE_Hopdong
 {
@@ -22,17 +22,16 @@ class PRE_Hopdong
 
     public function themnguoi_HD($params): array
     {
-        //Lấy ra idphong trong table hopdong
-        $idphong=$this->dao_hopdong->form($this->dao_hopdong->dto_get($params->id))->getIdphong();
-        //Lấy ra songuoimax trong table phong
-        $songuoimax=$this->dao_phong->form($this->dao_phong->dto_get($idphong))->getSonguoimax();
-        //Truy vấn số người hiện tại trong bảng khachtro
-        $songuoihientai=$this->dao_phong->get_KhachTro($params->id);
-        $kq=$songuoihientai+1;
-        if($this->dao_phong->soSanhSoNguoi($songuoimax,$kq))
-            return ['result' => false, 'message' => Null];
-        return ['result' => True, 'message' => MES::$themnguoivaoHD_fail];
-
+            //Lấy ra idphong trong table hopdong
+            $idphong=$this->dao_hopdong->form($this->dao_hopdong->dto_get($params->idphong))->getIdphong();
+            //Lấy ra songuoimax trong table phong
+            $songuoimax=$this->dao_phong->form($this->dao_phong->dto_get($idphong))->getSonguoimax();
+            //Truy vấn số người hiện tại trong bảng khachtro
+            $songuoihientai=$this->dao_phong->get_KhachTro($params->id);
+            $kq=$songuoihientai+1;
+            if($songuoimax>$kq)
+                return ['result' => false, 'message' => Null];
+            return ['result' => True, 'message' => MES::$themnguoivaoHD_fail];
     }
 
     public function xoanguoi_HD($params): array
