@@ -12,9 +12,9 @@ abstract class TestCase extends BaseTestCase
     protected $phongdathue2='c3f60300-bde7-4253-a8ff-e19bd169cd00';
     protected $phongdong='ff9d0815-8064-462d-b09d-2d34e8ce323c';
     protected $phongchuathue2='5f1ccd5e-5d42-4896-ab03-8d50debadeb5';
-    protected $khach1='f7996832-1029-40e9-979a-203cd68abc9e'; //dathue1
+    protected $khach1='f7996832-1029-40e9-979a-203cd68abc9e'; //dathue1 //có xe
     protected $khach2='99b75892-16bf-4fa5-87bd-44b489a2d010'; //dathue1
-    protected $khach3='daee23f3-9d7e-4678-9f64-d30db50aa022';
+    protected $khach3='daee23f3-9d7e-4678-9f64-d30db50aa022'; //có xe
     protected $khach4='b509d7cd-f61f-4676-8d2f-ca2eeb4c69bf';
     protected $khach5='81fe6384-1874-4b3e-8ae6-43b961fd5d2c'; //dathue2
     protected $hopdong='5e7b0fc8-0462-4400-a049-0ee261df81e1';
@@ -49,7 +49,7 @@ abstract class TestCase extends BaseTestCase
     {
         $db_log=app('db')->table('log')->orderBy('ngaylap','desc')->first();
         $db_log->noidung=json_decode($db_log->noidung,true);
-        if($log['idhopdong']!=$db_log->idhopdong) return false;
+       /* if($log['idhopdong']!=$db_log->idhopdong) return false;*/
         if($log['idloai']!=$db_log->idloai) return false;
         if($log['noidung']!=$db_log->noidung) return false;
         return true;

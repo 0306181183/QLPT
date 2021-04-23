@@ -41,7 +41,7 @@ class Khachtro_Test extends TestCase
             'tenkhach' => 'Võ Văn B',
             'cmnd' => '12345678904',
             'gioitinh' => true,
-            'ngaysinh' => '2000/2/11',
+            'ngaysinh' => '2000-02-11',
             'quequan' => 'Tp.HCM'
         ];
         $data = [

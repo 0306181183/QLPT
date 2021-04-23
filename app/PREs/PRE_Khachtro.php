@@ -3,7 +3,7 @@
 
 namespace App\PREs;
 
-use Messages as MES;
+use App\Mes as MES;
 use App\DAOs\DAO_Khachtro;
 
 

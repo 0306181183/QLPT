@@ -23,7 +23,7 @@ class Xe_Test extends TestCase
             'noidung'=>[
                 'idkhach'=>$input['idkhach']
             ],
-            'idhopdong'=>$this->hopdong_xe,
+            'idhopdong'=>$this->hopdong,
         ];
 
         $this->call('POST', 'them-xe', $input);

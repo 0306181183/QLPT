@@ -33,7 +33,8 @@ class VAL_Khachtro
         try {
             $this->validate($params, [
                 'idkhach'=>'required|uuid|exists:khachtro,id',
-                'cmnd' => 'required|string|unique|min:9|max:12',
+                'tenkhach' => 'required|string|max:100',
+                'cmnd' => 'required|string|min:9|max:12',
                 'ngaysinh' => 'required|date_format:Y-m-d',
                 'quequan' => 'required|string|max:100',
                 'gioitinh'=>'required|boolean',
