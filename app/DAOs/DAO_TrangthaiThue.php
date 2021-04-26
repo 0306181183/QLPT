@@ -43,6 +43,10 @@ class DAO_TrangthaiThue
         return $tmp;
     }
 
+    public function get_TrangThaiThue(string $idhopdong){
+        return app('db')->table('trangthaithue')->where('idhopdong',$idhopdong)->orderBy('ngaylap','desc')->first();
+    }
+
 
 
 
