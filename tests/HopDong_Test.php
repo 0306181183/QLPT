@@ -312,16 +312,21 @@ class HopDong_Test extends TestCase
             'wifi'=>true
         ];
         $data=[
-          'idloai'=>7 ,
+            'idhopdong'=>$input['id'],
+            'wifi'=>$input['wifi']
+        ];
+        $data_log=[
+          'idloai'=>7,
             'noidung'=>[
                 'wifi'=>$input['wifi']
             ],
-            'idhopdong'=>$input['idhopdong']
+            'idhopdong'=>$input['id']
         ];
-        $this->call('POST','wifi',$input);
+
+        $this->call('POST','wifi',$data);
         $this->seeJsonEquals(['success'=>mess::$thaydoiwifi]);
         $this->seeStatusCode(200);
-        $this->assertTrue($this->compareLog($data));
+        $this->assertTrue($this->compareLog($data_log));
 
     }
 }

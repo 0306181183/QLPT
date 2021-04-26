@@ -37,7 +37,7 @@ class HopdongController extends Controller
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'tao_hopdong', MES::$taohopdong);
     }
-    public function themnguoi_HD(Request $request) :Json
+    public function themnguoi_HD(Request $request)
     {
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'themnguoi_HD', MES::$themnguoivaoHD);
     }
@@ -45,7 +45,7 @@ class HopdongController extends Controller
     {
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'xoanguoi_HD', MES::$xoanguoikhoiHD   );
     }
-    public function wifi(Request $request) :Json
+    public function wifi(Request $request)
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'wifi', MES::$thaydoiwifi);
     }
