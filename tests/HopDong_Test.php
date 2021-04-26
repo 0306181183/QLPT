@@ -3,7 +3,7 @@
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use Laravel\Lumen\Testing\WithoutMiddleware;
-use app\Mes as mess;
+use App\Mes as mess;
 
 class HopDong_Test extends TestCase
 {
@@ -121,6 +121,10 @@ class HopDong_Test extends TestCase
             'chisodien'=>349
         ];
         $data=[
+            'idhopdong'=>$input['id'],
+            'chisodien'=>$input['chisodien']
+        ];
+        $data_log=[
             'idloai'=>6,
             'noidung'=>[
                 'chisodien'=>$input['chisodien']
@@ -128,10 +132,10 @@ class HopDong_Test extends TestCase
             'idhopdong'=>$input['id']
         ];
 
-        $this->call('POST','ghi-dien',$input);
-        $this->seeJsonEquals(['seccess'=>mess::$ghidien]);
+        $this->call('POST','ghi-dien',$data);
+        $this->seeJsonEquals(['success'=>mess::$ghidien]);
         $this->seeStatusCode(200);
-        $this->assertTrue($this->compareLog($data));
+        $this->assertTrue($this->compareLog($data_log));
     }
     public  function  testGhiDien_fail()
     {
@@ -139,8 +143,12 @@ class HopDong_Test extends TestCase
             'id'=>$this->hopdong,
             'chisodien'=>200
         ];
+        $data=[
+            'idhopdong'=>$input['id'],
+            'chisodien'=>$input['chisodien']
+        ];
 
-        $this->call('POST','ghi-dien',$input);
+        $this->call('POST','ghi-dien',$data);
         $this->seeJsonEquals(['conflict'=>mess::$ghidien_fail]);
         $this->seeStatusCode(409);
 
@@ -300,7 +308,7 @@ class HopDong_Test extends TestCase
     public function testWifi()
     {
         $input=[
-            'idhopdong'=>$this->hopdong,
+            'id'=>$this->hopdong,
             'wifi'=>true
         ];
         $data=[
@@ -311,7 +319,7 @@ class HopDong_Test extends TestCase
             'idhopdong'=>$input['idhopdong']
         ];
         $this->call('POST','wifi',$input);
-        $this->seeJsonEquals(['seccess'=>mess::$thaydoiwifi]);
+        $this->seeJsonEquals(['success'=>mess::$thaydoiwifi]);
         $this->seeStatusCode(200);
         $this->assertTrue($this->compareLog($data));
 

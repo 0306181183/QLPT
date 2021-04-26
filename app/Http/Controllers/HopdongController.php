@@ -25,7 +25,7 @@ class HopdongController extends Controller
     {
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'tao_hopdong', MES::$taohopdong);
     }
-    public function ghi_dien(Request $request) :Json
+    public function ghi_dien(Request $request)
     {
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'ghi_dien', MES::$ghidien);
     }

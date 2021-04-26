@@ -20,11 +20,11 @@ class REP_HopDong
     private DAO_Phieuthu $dao_phieuthu;
     private DAO_TrangthaiThue $dao_trangthaithue;
     private DAO_Xe $dao_xe;
-    public function __construct(DAO_Xe $dao_xe,DAO_Log $dao_log,DAO_Khachtro $dao_khach,DAO_Hopdong $dao_hopdong,DAO_Phieuthu $dao_phieuthu,DAO_TrangthaiThue $dao_trangthaithue)
+    public function __construct(DAO_Xe $dao_xe,DAO_Log $dao_log,DAO_Khachtro $dao_khachtro,DAO_Hopdong $dao_hopdong,DAO_Phieuthu $dao_phieuthu,DAO_TrangthaiThue $dao_trangthaithue)
     {
         $this->dao_hopdong=$dao_hopdong;
         $this->dao_log=$dao_log;
-        $this->dao_khachtro=$this->dao_khachtro;
+        $this->dao_khachtro=$dao_khachtro;
         $this->dao_phieuthu=$dao_phieuthu;
         $this->dao_trangthaithue=$dao_trangthaithue;
         $this->dao_xe=$dao_xe;
@@ -65,6 +65,7 @@ class REP_HopDong
             $dto_log->setNoidung([
                 'chisodien'=>$request->chisodien
             ]);
+
             $this->dao_log->add($dto_log);
         }catch (Exception $e)
         {

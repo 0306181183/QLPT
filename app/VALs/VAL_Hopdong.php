@@ -35,7 +35,7 @@ class VAL_Hopdong
         try {
             $this->validate($params, [
                 'chisodien' => 'required|integer|between:0,100000',
-                'idhopdong'=> 'required|uuid|exists:hopdong,id'
+                'idhopdong'=> 'uuid|exists:hopdong,id'
 
             ]);
         } catch (ValidationException $e) {
