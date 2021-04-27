@@ -45,12 +45,12 @@ class PRE_Hopdong
         return ['result' => True, 'message' => MES::$xoanguoikhoiHD_fail];
     }
 
-    public function kt_GhiDien($params):array
+    public function ghi_dien($params): array
     {
         $sodien=$this->dao_trangthaithue->form($this->dao_trangthaithue->get_TrangThaiThue($params->idhopdong))->getChisodien();
-        if($sodien<=$params->chisodien)
+        if($sodien<$params->chisodien)
             return ['result' => false, 'message' => Null];
-        return ['result' => True, 'message' => MES::$xoanguoikhoiHD_fail];
+        return ['result' => True, 'message' => MES::$ghidien_fail];
 
     }
 
