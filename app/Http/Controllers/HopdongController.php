@@ -21,31 +21,31 @@ class HopdongController extends Controller
         $this->rep = $rep;
         $this->pre = $pre;
     }
-    public function tao_hopdong(Request $request) :Json
+    public function tao_hopdong(Request $request)
     {
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'tao_hopdong', MES::$taohopdong);
     }
-    public function ghi_dien(Request $request) :Json
+    public function ghi_dien(Request $request)
     {
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'ghi_dien', MES::$ghidien);
     }
-    public function tao_phieuthu(Request $request) :Json
+    public function tao_phieuthu(Request $request)
     {
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'tao_phieuthu', MES::$taophieuthu);
     }
-    public function thanh_toan(Request $request) :Json
+    public function thanh_toan(Request $request)
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'tao_hopdong', MES::$taohopdong);
     }
-    public function themnguoi_HD(Request $request) :Json
+    public function themnguoi_HD(Request $request)
     {
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'themnguoi_HD', MES::$themnguoivaoHD);
     }
-    public function xoanguoi_HD(Request $request) :Json
+    public function xoanguoi_HD(Request $request)
     {
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'xoanguoi_HD', MES::$xoanguoikhoiHD   );
     }
-    public function wifi(Request $request) :Json
+    public function wifi(Request $request)
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'wifi', MES::$thaydoiwifi);
     }
