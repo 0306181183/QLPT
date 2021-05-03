@@ -14,16 +14,13 @@ class Controller extends BaseController
     {
         $tmp = $val->$name($request);
         if ($tmp) return $this->invalid_response($tmp);
-
         if ($pre != null) {
             $tmp = $pre->$name($request);
-            if ($tmp['result'] == True) return $this->conflict_response($tmp['message']);
+             if ($tmp['result'] == True) return $this->conflict_response($tmp['message']);
         }
         $tmp = $rep->$name($request);
-//        if ($tmp) return $this->unexpected_response();
+//    if ($tmp) return $this->unexpected_response();
         if ($tmp) return $tmp->getMessage();
-
-
         return response()->json(['success' => $success_message]);
 
     }

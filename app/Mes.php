@@ -24,14 +24,13 @@ class Mes
     static  string $taophieuthu="Phiếu thu đã được khởi tạo";
     static string $thanhtoan="Đã thanh toán thành công";
     static string $themnguoivaoHD="Thêm người vào phòng thành công";
-    static string $themnguoivaoHD_fail="Số người đã đạt mức tối";
+    static string $themnguoivaoHD_fail="Số người đã đạt mức tối đa";
     static string $xoanguoikhoiHD="Xóa người khỏi hợp đồng thành công";
     static string $xoanguoikhoiHD_fail="Xóa người thất bại";
     static string $thaydoiwifi="Thay đổi wifi thành công";
     static string $themxe="Thêm xe thành công";
     static string $xoaxe="Xóa xe thành công";
     static string $suagiadv="Sửa giá dịch vụ";
-    private static $query_success_status_code="";
     public static $conflict="Lỗi hệ thống";
     public static $unexpected="Lỗi không xác định";
 }

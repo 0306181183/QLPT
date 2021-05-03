@@ -17,11 +17,9 @@ class VAL_Hopdong
             $this->validate($params, [
                 'thoihan' => 'required|integer|between:3,12',
                 'tiencoc' => 'required|integer|between:0,100000000',
-                'idphong' => 'required|uuid|exists:phong,id',
+                'idphong' => 'uuid|exists:phong,id',
                 'chisodien' => 'required|integer|between:0,100000',
-                'khach.*.idkhach'=>'required|uuid|exists:khach,id',
-
-
+                'khach[idkhach]'=>'uuid|exists:khach,id',
             ]);
         } catch (ValidationException $e) {
             $error_messages = $e->errors();
@@ -63,7 +61,7 @@ class VAL_Hopdong
     {
         try {
             $this->validate($params, [
-                'id'=>'required|uuid|exists:hopdong,id',
+                'idhopdong'=>'uuid|exists:hopdong,id',
 
             ]);
         } catch (ValidationException $e) {
@@ -90,8 +88,8 @@ class VAL_Hopdong
     {
         try {
             $this->validate($params, [
-                'khach*.*idkhach'=>'required|uuid|exists:khachtro,id',
-                'idhopdong'=>'required|uuid|exists:hopdong,id'
+                'idkhach'=>'uuid|exists:khachtro,id',
+                'idhopdong'=>'uuid|exists:hopdong,id'
             ]);
         } catch (ValidationException $e) {
             $error_messages = $e->errors();
@@ -104,7 +102,7 @@ class VAL_Hopdong
     {
         try {
             $this->validate($params, [
-                'khach*.*idkhach'=>'required|uuid|exists:khachtro,id',
+                'khach[idkhach]'=>'required|uuid|exists:khachtro,id',
                 'idhopdong'=>'required|uuid|exists:hopdong,id'
             ]);
         } catch (ValidationException $e) {
