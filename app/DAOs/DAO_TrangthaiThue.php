@@ -7,6 +7,7 @@ namespace App\DAOs;
 
 
 use App\DTOs\DTO_Trangthaithue;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class DAO_TrangthaiThue
@@ -20,9 +21,23 @@ class DAO_TrangthaiThue
             'soxe'=>$dto_ttt->getSoxe(),
             'songuoi'=>$dto_ttt->getSonguoi(),
             'giaphong'=>$dto_ttt->getGiaphong(),
-            'ngaylap'=>date('Y-m-d')
+            'wifi'=>$dto_ttt->getWifi(),
+            'ngaylap'=>Carbon::now(),
         ]);
     }
+
+
+    public function modify(DTO_Trangthaithue $dto_ttt)
+    {
+        app('db')->table('trangthaithue')->where('id',$dto_ttt->getId())->update([
+            'chisodien' => $dto_ttt->getChisodien(),
+            'soxe' => $dto_ttt->getSoxe(),
+            'songuoi'=>$dto_ttt->getSonguoi(),
+            'giaphong' => $dto_ttt->getGiaphong(),
+            'wifi'=>$dto_ttt->getWifi(),
+        ]);
+    }
+
 
     public function dto_get(string $id)
     {

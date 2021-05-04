@@ -12,6 +12,7 @@ class DAO_Log
 {
     public function add(DTO_Log $dto_log)
     {
+        var_dump($dto_log);
         app('db')->table('log')->insert([
             'id'=>(string)Str::uuid(),
             'idloai'=>$dto_log->getIdloai(),

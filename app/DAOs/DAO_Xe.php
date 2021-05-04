@@ -32,8 +32,12 @@ class DAO_Xe
     }
     public function get_idkhach(string $idkhach)
     {
-        return app('db')->table('xe')->where('idkhach',$idkhach);
+        return app('db')->table('xe')->where('idkhach',$idkhach)->count();
     }
+
+
+
+
     public function remove_idkhach(string $idkhach)
     {
         app('db')->table('xe')->where('idkhach',$idkhach)->delete();

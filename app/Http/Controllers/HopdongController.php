@@ -23,7 +23,7 @@ class HopdongController extends Controller
     }
     public function tao_hopdong(Request $request)
     {
-        return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'tao_hopdong', MES::$taohopdong);
+        return $this->command_frame($request,$this->val, $this->pre, $this->rep, 'tao_hopdong', MES::$taohopdong);
     }
     public function ghi_dien(Request $request)
     {
@@ -31,6 +31,7 @@ class HopdongController extends Controller
     }
     public function tao_phieuthu(Request $request)
     {
+        var_dump($this->command_frame($request, $this->val, $this->pre, $this->rep, 'tao_phieuthu', MES::$taophieuthu));
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'tao_phieuthu', MES::$taophieuthu);
     }
     public function thanh_toan(Request $request)
@@ -39,6 +40,7 @@ class HopdongController extends Controller
     }
     public function themnguoi_HD(Request $request)
     {
+        //var_dump($this->command_frame($request, $this->val, $this->pre, $this->rep, 'themnguoi_HD', MES::$themnguoivaoHD));
         return $this->command_frame($request, $this->val, $this->pre, $this->rep, 'themnguoi_HD', MES::$themnguoivaoHD);
     }
     public function xoanguoi_HD(Request $request)
