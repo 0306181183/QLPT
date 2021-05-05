@@ -6,6 +6,7 @@ namespace App\DAOs;
 
 use App\DTOs\DTO_Log;
 use Carbon\Carbon;
+use Carbon\Traits\Date;
 use Illuminate\Support\Str;
 
 class DAO_Log
@@ -37,6 +38,10 @@ class DAO_Log
         $tmp->setIdloai($rc->idloai);
         $tmp->setNoidung(json_decode($rc->noidung,1));
         return $tmp;
+    }
+    public function dslog(int $idloai,string $hopdong,string $thoigian)
+    {
+        return app('db')->table('log')->where('idloai',$idloai)->where('idhopdong',$hopdong);
     }
 
 
