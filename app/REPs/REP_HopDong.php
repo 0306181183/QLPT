@@ -170,6 +170,34 @@ class REP_HopDong
     public function xoanguoi_HD($request)
     {
         try {
+            $dto_khachtro=$this->dao_khachtro->form($this->dao_khachtro->dto_get($request->idkhach));
+            $dto_khachtro->setIdhopdong(null);
+            app('db')->transaction(
+                function () use ($dto_khachtro,$request) {
+                    $this->dao_khachtro->modify($dto_khachtro);
+                    $dto_log1 = new DTO_Log();
+                    $dto_log1->setIdloai(3);
+                    $dto_log1->setNoidung([
+                        'idkhach' => $request->idkhach,
+                    ]);
+                    $dto_log1->setIdhopdong($request->idhopdong);
+                    $this->dao_log->add($dto_log1);
+                    $soluongxe=$this->dao_xe->get_idkhach($dto_khachtro->getId());
+                    if($soluongxe>0){
+                        for($i=0;$i<$soluongxe;$i++){
+                            $dto_log2 = new DTO_Log();
+                            $dto_log2->setIdloai(5);
+                            $dto_log2->setNoidung([
+                                'idkhach' => $request->idkhach,
+                            ]);
+                            $dto_log2->setIdhopdong($request->idhopdong);
+                            $this->dao_log->add($dto_log2);
+                        }
+                    }
+                }
+
+            );
+
 
         }catch (Exception $e)
         {

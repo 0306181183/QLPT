@@ -301,7 +301,7 @@ class HopDong_Test extends TestCase
             ],
             'idhopdong'=>$input['id']
         ];
-        $this->call('POST','xoa-nguoiHD',$input);
+        $this->call('POST','xoanguoi-HD',$input);
         $this->seeJsonEquals(['seccess'=>mess::$xoanguoikhoiHD]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('khachtro',$data1);
@@ -313,7 +313,7 @@ class HopDong_Test extends TestCase
             'id'=>$this->hopdong2,
             'idkhach'=>$this->khach5
         ];
-        $this->call('POST','xoa-nguoiHD',$input);
+        $this->call('POST','xoanguoi-HD',$input);
         $this->seeJsonEquals(['conflict'=>mess::$xoanguoikhoiHD_fail]);
         $this->seeStatusCode(409);
     }

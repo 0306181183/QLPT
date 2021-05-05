@@ -49,7 +49,7 @@ class PRE_Hopdong
 
     public function xoanguoi_HD($params): array
     {
-        $songuoihientai=$this->dao_phong->get_KhachTro($params->idkhach);
+        $songuoihientai=$this->dao_phong->get_KhachTro($params->idhopdong);
         if ( $songuoihientai>1)
             return ['result' => false, 'message' => Null];
         return ['result' => True, 'message' => MES::$xoanguoikhoiHD_fail];

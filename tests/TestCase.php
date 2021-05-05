@@ -47,10 +47,10 @@ abstract class TestCase extends BaseTestCase
     }
     protected function compareLog($log):bool
     {
-        $db_log=app('db')->table('log')->orderBy('ngaylap','desc')->first();
+        $db_log=app('db')->table('log')->where('idloai',$log['idloai'])->orderBy('ngaylap','desc')->first();
         $db_log->noidung=json_decode($db_log->noidung,true);
-       /* if($log['idhopdong']!=$db_log->idhopdong) return false;*/
-        if($log['idloai']!=$db_log->idloai) return false;
+        /* if($log['idhopdong']!=$db_log->idhopdong) return false;*/
+        //if($log['idloai']!=$db_log->idloai) return false;
         if($log['noidung']!=$db_log->noidung) return false;
         return true;
     }
