@@ -9,6 +9,7 @@ use App\DAOs\DAO_Phong;
 use App\DAOs\DAO_TrangthaiThue;
 use App\DAOs\DAO_Xe;
 use App\DTOs\DTO_Hopdong;
+use App\DTOs\DTO_Khachtro;
 use App\DTOs\DTO_Log;
 use App\DTOs\DTO_Trangthaithue;
 use Exception;
@@ -21,8 +22,10 @@ class REP_HopDong
     private DAO_TrangthaiThue $dao_trangthaithue;
     private DAO_Xe $dao_xe;
     private DAO_Phong $dao_phong;
-    public function __construct(DAO_Phong $dao_phong,DAO_Xe $dao_xe,DAO_Log $dao_log,DAO_Hopdong $dao_hopdong,DAO_Phieuthu $dao_phieuthu,DAO_TrangthaiThue $dao_trangthaithue)
+    private DAO_Khachtro $dao_khachtro;
+    public function __construct(DAO_Khachtro $dao_khachtro,DAO_Phong $dao_phong,DAO_Xe $dao_xe,DAO_Log $dao_log,DAO_Hopdong $dao_hopdong,DAO_Phieuthu $dao_phieuthu,DAO_TrangthaiThue $dao_trangthaithue)
     {
+        $this->dao_khachtro=$dao_khachtro;
         $this->dao_phong=$dao_phong;
         $this->dao_hopdong=$dao_hopdong;
         $this->dao_log=$dao_log;
@@ -127,38 +130,36 @@ class REP_HopDong
     public function themnguoi_HD($request)
     {
         try {
-            $dto_trangthaithue=$this->dao_trangthaithue->form($this->dao_trangthaithue->get_TrangThaiThue($request->idhopdong));
+            $tmp=$this->dao_khachtro->dto_get($request->idkhach);
+            $dto_khachtro=$this->dao_khachtro->form($tmp);
+            $dto_khachtro->setIdhopdong($request->idhopdong);
             app('db')->transaction(
-                function () use ($dto_trangthaithue,$request) {
-                    $songuoi = $dto_trangthaithue->getSonguoi();
-                    $songuoi += 1;
-                    $soxe = $dto_trangthaithue->getSoxe();
-                    $dto_log = new DTO_Log();
-                    $dto_log->setIdloai(2);
-                    $dto_log->setNoidung([
-                        'idkhach' => $request->idkhach
+                function () use ($dto_khachtro,$request)
+                {
+                    $this->dao_khachtro->modify($dto_khachtro);
+                    $dto_log1=new DTO_Log();
+                    $dto_log1->setIdhopdong($request->idhopdong);
+                    $dto_log1->setIdloai(2);
+                    $dto_log1->setIdhopdong([
+                        'idkhach'=>$dto_khachtro->getId()
                     ]);
-                    $dto_log->setIdhopdong($request->idhopdong);
-                    $this->dao_log->add($dto_log);
-                    $soluongxe = $this->dao_xe->get_idkhach($request->idkhach);
-                    if ($soluongxe > 0) {
-                        for ($i = 0; $i < $soluongxe; $i++) {
-                            $dto_log1 = new DTO_Log();
-                            $dto_log1->setIdloai(4);
-                            $dto_log1->setNoidung([
-                                'idkhach' => $request->idkhach,
+                    $this->dao_log->add($dto_log1);
+                    $soluongxe=$this->dao_xe->get_idkhach($dto_khachtro->getId());
+                    if($soluongxe>0)
+                    {
+                        for ( $i=0;$i<$soluongxe;$i++)
+                        {
+                            $dto_log2=new DTO_Log();
+                            $dto_log2->setIdhopdong($request->idhopdong);
+                            $dto_log2->setNoidung([
+                                'idkhach'=>$request->idkhach
                             ]);
-                            $dto_log1->setIdhopdong($request->idhopdong);
-                            $this->dao_log->add($dto_log1);
-                            $soxe = $soxe + 1;
+                            $dto_log2->setIdloai(4);
+                            $this->dao_log->add($dto_log2);
                         }
                     }
-                    $dto_trangthaithue->setSonguoi($songuoi);
-                    $dto_trangthaithue->setSoxe($soxe);
-                    $this->dao_trangthaithue->modify($dto_trangthaithue);
-                }
 
-            );
+                });
 
         }catch (Exception $e)
         {

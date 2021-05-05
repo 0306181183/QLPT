@@ -41,7 +41,7 @@ class PRE_Hopdong
             //Lấy ra songuoimax trong table phong
             $songuoimax=$this->dao_phong->form($this->dao_phong->dto_get($idphong))->getSonguoimax();
             //Truy vấn số người hiện tại trong bảng trangthaithue
-            $songuoihientai=$this->dao_trangthaithue->form($this->dao_trangthaithue->get_TrangThaiThue($params->idhopdong))->getSonguoi();
+            $songuoihientai=$this->dao_phong->get_KhachTro($params->idhopdong);
             if($songuoimax>$songuoihientai)
                 return ['result' => false, 'message' => Null];
             return ['result' => True, 'message' => MES::$themnguoivaoHD_fail];
