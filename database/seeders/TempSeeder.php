@@ -12,6 +12,7 @@ class TempSeeder extends DatabaseSeeder
 
     public function run()
     {
+        $thangtruoc='2021-04-01';
         $date=Carbon::now();
         DB::table('Phong')->insert([
             ["id"=>$this->phongchuathue1,"tenphong"=>"Phòng chưa thuê 1","songuoimax"=>6,"giaphong"=>4000000,"trangthai"=>true],
@@ -21,7 +22,7 @@ class TempSeeder extends DatabaseSeeder
             ["id"=>$this->phongdathue2,"tenphong"=>"Phòng đã thuê","songuoimax"=>2,"giaphong"=>2000000,"trangthai"=>true]
         ]);
         DB::table('HopDong')->insert([
-            ["id"=>$this->hopdong,"ngaylap"=>$date,"thoihan"=>6,"tiencoc"=>2000000,"trangthai"=>true,"idphong"=>$this->phongdathue1],
+            ["id"=>$this->hopdong,"ngaylap"=>$thangtruoc,"thoihan"=>6,"tiencoc"=>2000000,"trangthai"=>true,"idphong"=>$this->phongdathue1],
             ["id"=>$this->hopdong2,"ngaylap"=>$date,"thoihan"=>6,"tiencoc"=>2000000,"trangthai"=>true,"idphong"=>$this->phongdathue2]
         ]);
         DB::table('KhachTro')->insert([
@@ -39,22 +40,29 @@ class TempSeeder extends DatabaseSeeder
 
 
         DB::table('Log')->insert([
-            ["id"=>$this->lognguoi1,"idloai"=>2,"noidung"=>json_encode(['idnguoi'=>$this->khach1]),"idhopdong"=>$this->hopdong,"ngaylap"=>$date],
-            ["id"=>$this->lognguoi2,"idloai"=>2,"noidung"=>json_encode(['idnguoi'=>$this->khach2]),"idhopdong"=>$this->hopdong,"ngaylap"=>$date],
-            ["id"=>$this->logxe,"idloai"=>4,"noidung"=>json_encode(['idxe'=>$this->xe1]),"idhopdong"=>$this->hopdong,"ngaylap"=>$date],
+            ["id"=>$this->lognguoi1,"idloai"=>2,"noidung"=>json_encode(['idnguoi'=>$this->khach1]),"idhopdong"=>$this->hopdong,"ngaylap"=>$thangtruoc],
+            ["id"=>$this->lognguoi2,"idloai"=>2,"noidung"=>json_encode(['idnguoi'=>$this->khach2]),"idhopdong"=>$this->hopdong,"ngaylap"=>$thangtruoc],
+            ["id"=>$this->logxe,"idloai"=>4,"noidung"=>json_encode(['idxe'=>$this->xe1]),"idhopdong"=>$this->hopdong,"ngaylap"=>$thangtruoc],
             ["id"=>$this->lognguoi3,"idloai"=>2,"noidung"=>json_encode(['idnguoi'=>$this->khach5]),"idhopdong"=>$this->hopdong2,"ngaylap"=>$date],
+            ["id"=>$this->logchisodien1,"idloai"=>6,"noidung"=>json_encode(['chisodien'=>$this->chisodien]),"idhopdong"=>$this->hopdong,"ngaylap"=>$thangtruoc],
+            ["id"=>$this->logchisodien2,"idloai"=>6,"noidung"=>json_encode(['chisodien'=>$this->chisodien]),"idhopdong"=>$this->hopdong2,"ngaylap"=>$date],
+            ["id"=>$this->loggiaphong1,"idloai"=>1,"noidung"=>json_encode(['giaphong'=>2000000,'idphong'=>$this->phongdathue1]),"idhopdong"=>$this->hopdong,"ngaylap"=>$thangtruoc],
+            ["id"=>$this->loggiaphong2,"idloai"=>1,"noidung"=>json_encode(['giaphong'=>2000000,'idphong'=>$this->phongdathue2]),"idhopdong"=>$this->hopdong2,"ngaylap"=>$date],
+            ["id"=>$this->logwifi1,"idloai"=>7,"noidung"=>json_encode(['wifi'=>true]),"idhopdong"=>$this->hopdong,"ngaylap"=>$thangtruoc],
+            ["id"=>$this->logwifi2,"idloai"=>7,"noidung"=>json_encode(['wifi'=>false]),"idhopdong"=>$this->hopdong2,"ngaylap"=>$date],
+            ["id"=>$this->logchisodien3,"idloai"=>6,"noidung"=>json_encode(['chisodien'=>400]),"idhopdong"=>$this->hopdong,"ngaylap"=>$date],
         ]);
         DB::table('TrangThaiThue')->insert([
-            ["id"=>$this->snapshot1,"chisodien"=>$this->chisodien,"idhopdong"=>$this->hopdong,"soxe"=>1,"songuoi"=>2,"giaphong"=>"2000000","ngaylap"=>$date,"wifi"=>true],
-            ["id"=>$this->snapshot2,"chisodien"=>$this->chisodien,"idhopdong"=>$this->hopdong2,"soxe"=>0,"songuoi"=>1,"giaphong"=>"2000000","ngaylap"=>$date,"wifi"=>false]
+            ["id"=>$this->snapshot1,"chisodien"=>$this->chisodien,"idhopdong"=>$this->hopdong,"soxe"=>1,"songuoi"=>2,"giaphong"=>2000000,"ngaylap"=>$thangtruoc,"wifi"=>true],
+            ["id"=>$this->snapshot2,"chisodien"=>$this->chisodien,"idhopdong"=>$this->hopdong2,"soxe"=>0,"songuoi"=>1,"giaphong"=>2000000,"ngaylap"=>$date,"wifi"=>false]
         ]);
         DB::table('GiaDichVu')->insert([
-           ["id"=>$this->dien,"idloai"=>1,"giathaydoi"=>3500,"ngaythaydoi"=>$date],
-            ["id"=>$this->nuoc,"idloai"=>2,"giathaydoi"=>50000,"ngaythaydoi"=>$date],
-            ["id"=>$this->wifi,"idloai"=>3,"giathaydoi"=>70000,"ngaythaydoi"=>$date],
-            ["id"=>$this->rac,"idloai"=>4,"giathaydoi"=>10000,"ngaythaydoi"=>$date],
-            ["id"=>$this->quanly,"idloai"=>5,"giathaydoi"=>30000,"ngaythaydoi"=>$date],
-            ["id"=>$this->xe,"idloai"=>6,"giathaydoi"=>200000,"ngaythaydoi"=>$date]
+           ["id"=>$this->dien,"idloai"=>1,"giathaydoi"=>3500,"ngaythaydoi"=>$this->timeao],
+            ["id"=>$this->nuoc,"idloai"=>2,"giathaydoi"=>50000,"ngaythaydoi"=>$this->timeao],
+            ["id"=>$this->wifi,"idloai"=>3,"giathaydoi"=>70000,"ngaythaydoi"=>$this->timeao],
+            ["id"=>$this->rac,"idloai"=>4,"giathaydoi"=>10000,"ngaythaydoi"=>$this->timeao],
+            ["id"=>$this->quanly,"idloai"=>5,"giathaydoi"=>30000,"ngaythaydoi"=>$this->timeao],
+            ["id"=>$this->xe,"idloai"=>6,"giathaydoi"=>200000,"ngaythaydoi"=>$this->timeao]
         ]);
     }
 }

@@ -8,6 +8,7 @@ use App\DAOs\DAO_Hopdong;
 use App\DAOs\DAO_Phong;
 use App\DAOs\DAO_TrangthaiThue;
 use App\Mes as MES;
+use Carbon\Carbon;
 
 class PRE_Hopdong
 {
@@ -40,6 +41,7 @@ class PRE_Hopdong
             $idphong=$this->dao_hopdong->form($this->dao_hopdong->dto_get($params->idhopdong))->getIdphong();
             //Lấy ra songuoimax trong table phong
             $songuoimax=$this->dao_phong->form($this->dao_phong->dto_get($idphong))->getSonguoimax();
+
             //Truy vấn số người hiện tại trong bảng trangthaithue
             $songuoihientai=$this->dao_phong->get_KhachTro($params->idhopdong);
             if($songuoimax>$songuoihientai)
@@ -61,6 +63,13 @@ class PRE_Hopdong
         if($sodien<$params->chisodien)
             return ['result' => false, 'message' => Null];
         return ['result' => True, 'message' => MES::$ghidien_fail];
+
+    }
+    public function tao_phieuthu($params): array
+    {
+        if($this->dao_trangthaithue->ktthanhtoan($params->idhopdong)>0)
+            return ['result'=>true,'message'=>MES::$taophieuthu_fail];
+        return ['result' => false, 'message' => Null];
 
     }
 

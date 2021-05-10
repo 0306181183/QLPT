@@ -5,8 +5,10 @@ namespace App\DAOs;
 
 
 use App\DTOs\DTO_Khachtro;
+use Carbon\Traits\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 
 class DAO_Khachtro
@@ -33,6 +35,7 @@ class DAO_Khachtro
             'gioitinh' => $dto_khachtro->getGioitinh(),
             'ngaysinh' => $dto_khachtro->getNgaysinh(),
             'quequan' => $dto_khachtro->getQuequan(),
+            'idhopdong'=>$dto_khachtro->getIdhopdong(),
             'trangthai'=>$dto_khachtro->getTrangthai(),
         ]);
     }
@@ -60,6 +63,7 @@ class DAO_Khachtro
     {
         return app('db')->table('khachtro')->where('id', $id)->value('idhopdong');
     }
+
 
 
 

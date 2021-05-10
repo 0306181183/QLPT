@@ -18,7 +18,9 @@ class Controller extends BaseController
             $tmp = $pre->$name($request);
              if ($tmp['result'] == True) return $this->conflict_response($tmp['message']);
         }
+
         $tmp = $rep->$name($request);
+
 
 //        if ($tmp) return $this->unexpected_response();
         if ($tmp) return $tmp->getMessage();

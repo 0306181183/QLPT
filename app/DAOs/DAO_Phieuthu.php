@@ -13,6 +13,7 @@ class DAO_Phieuthu
 {
     public function add(DTO_Phieuthu $dto_phieuthu)
     {
+
         app('db')->table('phieuthu')->insert([
             'id'=>(string)Str::uuid(),
             'giaphong' => $dto_phieuthu->getGiaphong(),
@@ -21,10 +22,11 @@ class DAO_Phieuthu
             'tienwifi' => $dto_phieuthu->getTienwifi(),
             'tienxe'=> $dto_phieuthu->getTienxe(),
             'tienrac'=>$dto_phieuthu->getTienrac(),
-            'tienquan_ly'=>$dto_phieuthu->getTienquanly(),
+            'tienquanly'=>$dto_phieuthu->getTienquanly(),
             'tranhthai'=>true,
-            'ngaylap'=>date('Y-m-d')
+            'idtrangthaithue'=>$dto_phieuthu->getIdtrangthaithue(),
         ]);
+
     }
     public function modify(string $id)
     {

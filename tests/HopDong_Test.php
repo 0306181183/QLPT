@@ -22,8 +22,6 @@ class HopDong_Test extends TestCase
             ],
             'wifi'=>true,
         ];
-
-
         $data1=[
             'thoihan'=>$input['thoihan'],
             'tiencoc'=>$input['tiencoc'],
@@ -37,12 +35,7 @@ class HopDong_Test extends TestCase
             'giaphong'=>4000000,
             'wifi'=>$input['wifi']
         ];
-        $data3=[
-            'idloai'=>2,
-            'noidung'=>[
-                'idkhach'=>$this->khach3
-            ]
-        ];
+
         $data4=[
             'idloai'=>2,
             'noidung'=>[
@@ -55,17 +48,37 @@ class HopDong_Test extends TestCase
                 'idkhach'=>$this->khach3
             ]
         ];
+        $data6=[
+            'idloai'=>1,
+            'noidung'=>[
+                'giaphong'=>4000000,
+                'idphong'=>$this->phongchuathue1
+            ]
+        ];
+        $data7=[
+            'idloai'=>6,
+            'noidung'=>[
+                'chisodien'=>124
+            ]
+        ];
+        $data8=[
+            'idloai'=>7,
+            'noidung'=>[
+                'wifi'=>true
+            ]
+        ];
         $this->call('POST','tao-hopdong',$input);
         $this->seeJsonEquals(['success'=>mess::$taohopdong]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('hopdong',$data1);
         $this->seeInDatabase('trangthaithue',$data2);
-        var_dump($this->compareLog($data3));
-        var_dump($this->compareLog($data4));
-        var_dump($this->compareLog($data5));
-       // $this->assertTrue($this->compareLog($data3));
-       //$this->assertTrue($this->compareLog($data4));
-        //$this->assertTrue($this->compareLog($data5));
+
+       $this->assertTrue($this->compareLog($data4));
+       $this->assertTrue($this->compareLog($data5));
+        $this->assertTrue($this->compareLog($data6));
+        $this->assertTrue($this->compareLog($data7));
+        $this->assertTrue($this->compareLog($data4));
+        $this->assertTrue($this->compareLog($data8));
 
     }
     public function testCreate2()
@@ -101,6 +114,25 @@ class HopDong_Test extends TestCase
                 'idkhach'=>$this->khach4
             ]
         ];
+        $data4=[
+            'idloai'=>1,
+            'noidung'=>[
+                'giaphong'=>4000000,
+                'idphong'=>$this->phongchuathue1
+            ]
+        ];
+        $data5=[
+            'idloai'=>6,
+            'noidung'=>[
+                'chisodien'=>124
+            ]
+        ];
+        $data6=[
+            'idloai'=>7,
+            'noidung'=>[
+                'wifi'=>true
+            ]
+        ];
 
 
         $this->call('POST','tao-hopdong',$input);
@@ -109,6 +141,9 @@ class HopDong_Test extends TestCase
         $this->seeInDatabase('hopdong',$data1);
         $this->seeInDatabase('trangthaithue',$data2);
         $this->assertTrue($this->compareLog($data3));
+        $this->assertTrue($this->compareLog($data4));
+        $this->assertTrue($this->compareLog($data5));
+        $this->assertTrue($this->compareLog($data6));
     }
     public function testCreate_fail()
     {
@@ -118,8 +153,8 @@ class HopDong_Test extends TestCase
             'idphong'=>$this->phongchuathue2,
             'chisodien'=>124,
             'khach'=>[
-                'idkhach'=>$this->khach3,
-                'idkhach'=>$this->khach4
+               [ 'idkhach'=>$this->khach3],
+                ['idkhach'=>$this->khach4]
             ],
             'wifi'=>true,
         ];
@@ -172,9 +207,40 @@ class HopDong_Test extends TestCase
         $input=[
             'idhopdong'=>$this->hopdong //
         ];
+        $data1=[
+            'chisodien'=>400,
+            'idhopdong'=>$input['idhopdong'],
+            'soxe'=>1,
+            'songuoi'=>2,
+            'giaphong'=>2000000,
+            'wifi'=>true
+        ];
+        $data2=[
+            'giaphong'=>2000000,
+            'tiendien'=>192500,
+            'tiennuoc'=>100000,
+            'tienwifi'=>70000,
+            'tienxe'=>200000,
+            'tienrac'=>10000,
+            'tienquanly'=>30000,
+            'trangthai'=>true
+        ];
         $this->call('POST','tao-phieuthu',$input); //
         $this->seeJsonEquals(['success'=>mess::$taophieuthu]); //
         $this->seeStatusCode(200);
+        $this->seeInDatabase('trangthaithue',$data1);
+        $this->seeInDatabase('phieuthu',$data2);
+    }
+    public  function  testTaoPhieuThu_fail() //chưa sửa
+    {
+        $input=[
+            'idhopdong'=>$this->hopdong2 //
+        ];
+
+        $this->call('POST','tao-phieuthu',$input); //
+        $this->seeJsonEquals(['conflict'=>mess::$taophieuthu_fail]);
+        $this->seeStatusCode(409);
+
     }
     public  function  testThanhToan() //chưa sửa
     {
@@ -196,6 +262,7 @@ class HopDong_Test extends TestCase
             'idkhach'=>$this->khach3
         ];
         $data1=[
+            'id'=>$input['idkhach'],
             'idhopdong'=>$input['idhopdong']
         ];
         $data2=[
@@ -216,47 +283,47 @@ class HopDong_Test extends TestCase
         $this->seeJsonEquals(['success'=>mess::$themnguoivaoHD]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('khachtro',$data1);
-        //$this->assertTrue($this->compareLog($data2));
-        //$this->assertTrue($this->compareLog($data3));
+        $this->assertTrue($this->compareLog($data2));
+        $this->assertTrue($this->compareLog($data3));
 
     }
     public function testThemNguoi_khongxe()
     {
         $input=[
-            'id'=>$this->hopdong2,
+            'idhopdong'=>$this->hopdong2,
             'idkhach'=>$this->khach4
         ];
         $data1=[
             'id'=>$input['idkhach'],
-            'idhopdong'=>$input['id']
+            'idhopdong'=>$input['idhopdong']
         ];
         $data2=[
             'idloai'=>2,
             'noidung'=>[
                 'idkhach'=>$input['idkhach']
             ],
-            'idhopdong'=>$input['id']
+            'idhopdong'=>$input['idhopdong']
         ];
-        $this->call('POST','them-nguoiHD',$input);
-        $this->seeJsonEquals(['seccess'=>mess::$themnguoivaoHD]);
+        $this->call('POST','themnguoi-HD',$input);
+        $this->seeJsonEquals(['success'=>mess::$themnguoivaoHD]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('khachtro',$data1);
-        //$this->assertTrue($this->compareLog($data2));
+        $this->assertTrue($this->compareLog($data2));
     }
     public function testThemNguoi_fail()
     {
         $input=[
-            'id'=>$this->hopdong,
+            'idhopdong'=>$this->hopdong,
             'idkhach'=>$this->khach3
         ];
-        $this->call('POST','them-nguoiHD',$input);
+        $this->call('POST','themnguoi-HD',$input);
         $this->seeJsonEquals(['conflict'=>mess::$themnguoivaoHD_fail]);
         $this->seeStatusCode(409);
     }
     public function testXoaNguoi_coxe() //chưa sửa
     {
         $input=[
-            'id'=>$this->hopdong,
+            'idhopdong'=>$this->hopdong,
             'idkhach'=>$this->khach1
         ];
         $data1=[
@@ -268,17 +335,17 @@ class HopDong_Test extends TestCase
             'noidung'=>[
                 'idkhach'=>$input['idkhach']
             ],
-            'idhopdong'=>$input['id']
+            'idhopdong'=>$input['idhopdong']
         ];
         $data3=[
             'idloai'=>5,
             'noidung'=>[
                 'idkhach'=>$input['idkhach']
             ],
-            'idhopdong'=>$input['id']
+            'idhopdong'=>$input['idhopdong']
         ];
-        $this->call('POST','xoa-nguoiHD',$input);
-        $this->seeJsonEquals(['seccess'=>mess::$xoanguoikhoiHD]);
+        $this->call('POST','xoanguoi-HD',$input);
+        $this->seeJsonEquals(['success'=>mess::$xoanguoikhoiHD]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('khachtro',$data1);
         $this->assertTrue($this->compareLog($data2));
@@ -287,7 +354,7 @@ class HopDong_Test extends TestCase
     public function testXoaNguoi_khongxe()
     {
         $input=[
-            'id'=>$this->hopdong,
+            'idhopdong'=>$this->hopdong,
             'idkhach'=>$this->khach2
         ];
         $data1=[
@@ -299,10 +366,10 @@ class HopDong_Test extends TestCase
             'noidung'=>[
                 'idkhach'=>$input['idkhach']
             ],
-            'idhopdong'=>$input['id']
+            'idhopdong'=>$input['idhopdong']
         ];
         $this->call('POST','xoanguoi-HD',$input);
-        $this->seeJsonEquals(['seccess'=>mess::$xoanguoikhoiHD]);
+        $this->seeJsonEquals(['success'=>mess::$xoanguoikhoiHD]);
         $this->seeStatusCode(200);
         $this->seeInDatabase('khachtro',$data1);
         $this->assertTrue($this->compareLog($data2));
@@ -310,7 +377,7 @@ class HopDong_Test extends TestCase
     public function testXoaNguoi_fail()
     {
         $input=[
-            'id'=>$this->hopdong2,
+            'idhopdong'=>$this->hopdong2,
             'idkhach'=>$this->khach5
         ];
         $this->call('POST','xoanguoi-HD',$input);

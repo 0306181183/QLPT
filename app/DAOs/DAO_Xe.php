@@ -7,6 +7,7 @@ namespace App\DAOs;
 use App\DTOs\DTO_Phieuthu;
 use App\DTOs\DTO_Xe;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class DAO_Xe
 {
@@ -34,13 +35,9 @@ class DAO_Xe
     {
         return app('db')->table('xe')->where('idkhach',$idkhach)->count();
     }
-
-
-
-
     public function remove_idkhach(string $idkhach)
     {
-        app('db')->table('xe')->where('idkhach',$idkhach)->delete();
+         app('db')->table('xe')->where('idkhach',$idkhach)->delete();
     }
     public function form($rc):DTO_Xe
     {
@@ -51,4 +48,14 @@ class DAO_Xe
         $tmp->setLoaixe($rc->loaixe);
         return $tmp;
     }
+    public function soxe_HD(string $idhopdong)
+    {
+        return app('db')->table('hopdong')
+            ->join('khachtro','hopdong.id','=','khachtro.idhopdong')
+            ->join('xe','khachtro.id','=','xe.idkhach')
+            ->where('hopdong.id',$idhopdong)
+            ->count();
+    }
 }
+/*->join('khachtro','hopdong.id','=','khachtro.idhopdong')
+    ->join('xe','khachtro.id','=','xe.idkhach')*/

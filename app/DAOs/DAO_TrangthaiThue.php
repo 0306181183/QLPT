@@ -14,8 +14,9 @@ class DAO_TrangthaiThue
 {
     public function add(DTO_Trangthaithue $dto_ttt)
     {
+        $id=(string)Str::uuid();
         app('db')->table('trangthaithue')->insert([
-            'id'=>(string)Str::uuid(),
+            'id'=>$id,
             'chisodien'=>$dto_ttt->getChisodien(),
             'idhopdong'=>$dto_ttt->getIdhopdong(),
             'soxe'=>$dto_ttt->getSoxe(),
@@ -24,6 +25,7 @@ class DAO_TrangthaiThue
             'wifi'=>$dto_ttt->getWifi(),
             'ngaylap'=>Carbon::now(),
         ]);
+        return $id;
     }
 
 
@@ -60,6 +62,14 @@ class DAO_TrangthaiThue
 
     public function get_TrangThaiThue(string $idhopdong){
         return app('db')->table('trangthaithue')->where('idhopdong',$idhopdong)->orderBy('ngaylap','desc')->first();
+    }
+    public function ktthanhtoan(string $idhopdong)
+    {
+        $time =Carbon::now();
+        $thang=$time->month;
+        $nam=$time->year;
+        $ngay=$nam."-".$thang."-01";
+        return app('db')->table('trangthaithue')->where('idhopdong',$idhopdong)->whereDate('ngaylap','>=',$ngay)->orderBy('ngaylap','desc')->count();
     }
 
 

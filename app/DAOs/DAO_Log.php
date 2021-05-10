@@ -8,9 +8,11 @@ use App\DTOs\DTO_Log;
 use Carbon\Carbon;
 use Carbon\Traits\Date;
 use Illuminate\Support\Str;
+use PhpParser\Node\Scalar\String_;
 
 class DAO_Log
 {
+
     public function add(DTO_Log $dto_log)
     {
         var_dump($dto_log);
@@ -23,6 +25,7 @@ class DAO_Log
         ]);
 
     }
+
 
     public function dto_get(string $id)
     {
@@ -39,10 +42,41 @@ class DAO_Log
         $tmp->setNoidung(json_decode($rc->noidung,1));
         return $tmp;
     }
-    public function dslog(int $idloai,string $hopdong,string $thoigian)
+    public function loggiatri(string $hopdong,string $loai) //1 //7
     {
-        return app('db')->table('log')->where('idloai',$idloai)->where('idhopdong',$hopdong);
+        $thoigian=Carbon::now();
+        $time=$thoigian->subMonth();
+        $thang=$time->month;
+        $nam=$time->year;
+        $ngay=$nam."-".$thang."-02";
+        return app('db')->table('log')->where('idloai',$loai)->where('idhopdong',$hopdong)->whereDate('ngaylap','<',$ngay)->orderBy('ngaylap','DESC')->first();
     }
+    public function  slkhach(string $idhopdong,string $loai)//2 3
+    {
+        $thoigian=Carbon::now();
+        $time=$thoigian->subMonth();
+        $thang=$time->month;
+        $nam=$time->year;
+        $ngay=$nam."-".$thang."-15";
+        return app('db')->table('log')->where('idloai',$loai)->where('idhopdong',$idhopdong)->whereDate('ngaylap','>',$ngay)->count();
+    }
+    public function  dsxe(string $idhopdong,string $loai)//4 5
+    {
+        $thoigian=Carbon::now();
+        $time=$thoigian->subMonth();
+        $thang=$time->month;
+        $nam=$time->year;
+        $ngay=$nam."-".$thang."-01";
+        return app('db')->table('log')->where('idloai',$loai)->where('idhopdong',$idhopdong)->whereDate('ngaylap','>',$ngay)->get();
+    }
+    public function chisodien(string $idhopdong) //6
+    {
+        return app('db')->table('log')->where('idloai',6)->where('idhopdong',$idhopdong)->orderBy('ngaylap','DESC')->first();
+    }
+
+
+
+
 
 
 

@@ -35,6 +35,13 @@ abstract class TestCase extends BaseTestCase
     protected $hopdong2='a752c9b9-2b23-4f88-aa7f-ba90a5125a41';
     protected $lognguoi3='67eb4ece-ed4e-412b-8af2-9b0bb0e68bb4';
     protected $snapshot2='bc78d3c1-2ad8-4ca9-aecd-2b5086c9f121';
+    protected $logchisodien1='78ba1e3a-cf9a-448e-83db-143882508109';
+    protected $loggiaphong1='22f49f89-947b-4ff0-adbb-36dd1a4f9bad';
+    protected $logwifi1='3dbae855-e14f-49f2-9d29-f1305b278686';
+    protected $logchisodien2='e734a75f-bda4-483f-a899-e477cf3eb17e';
+    protected $loggiaphong2='db7749e7-450a-4527-8db8-8ca151c93530';
+    protected $logwifi2='63aa28a9-b069-4a95-b067-5418310ee8b3';
+    protected $timeao='01-01-2021';
     /**
      * Creates the application.
      *
@@ -54,4 +61,5 @@ abstract class TestCase extends BaseTestCase
         if($log['noidung']!=$db_log->noidung) return false;
         return true;
     }
+
 }
