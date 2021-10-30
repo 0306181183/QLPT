@@ -39,12 +39,7 @@ class DAO_Giadichvu
     }
     public function giadv(int $loai)
     {
-        $thoigian=Carbon::now();
-        $time=$thoigian->subMonth();
-        $thang=$time->month;
-        $nam=$time->year;
-        $ngay=$nam."-".$thang."-02";
-
+        $ngay=Carbon::now()->subDay(14);
         return app('db')->table('giadichvu')->where('idloai', $loai)->whereDate('ngaythaydoi','<',$ngay)->orderBy('ngaythaydoi','desc')->first();
     }
 

@@ -215,7 +215,7 @@ class HopDong_Test extends TestCase
             'giaphong'=>2000000,
             'wifi'=>true
         ];
-        $data2=[
+      $data2=[
             'giaphong'=>2000000,
             'tiendien'=>192500,
             'tiennuoc'=>100000,
@@ -230,6 +230,7 @@ class HopDong_Test extends TestCase
         $this->seeStatusCode(200);
         $this->seeInDatabase('trangthaithue',$data1);
         $this->seeInDatabase('phieuthu',$data2);
+
     }
     public  function  testTaoPhieuThu_fail() //chưa sửa
     {
@@ -245,15 +246,30 @@ class HopDong_Test extends TestCase
     public  function  testThanhToan() //chưa sửa
     {
         $input=[
-            'id'=>$this->hopdong,
+            'idhopdong'=>$this->hopdong,
         ];
         $data=[
-            'idhopdong'=>$input['id'],
+            'idhopdong'=>$input['idhopdong'],
 
         ];
         $this->call('POST','thanh-toan',$input);
         $this->seeJsonEquals(['seccess'=>mess::$thanhtoan]);
         $this->seeStatusCode(200);
+    }
+    public function testXoaHD()
+    {
+        $input=[
+            'idhopdong'=>$this->hopdong2,
+        ];
+        $data=[
+            'id'=>$input['idhopdong'],
+            'trangthai'=>false,
+        ];
+        $this->call('POST','xoa-hopdong',$input);
+        $this->seeJsonEquals(['success'=>mess::$xoaHD]);
+        $this->seeStatusCode(200);
+        $this->seeInDatabase('hopdong',$data);
+
     }
     public function testThemNguoi_coxe()
     {

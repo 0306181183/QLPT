@@ -12,7 +12,7 @@ class TempSeeder extends DatabaseSeeder
 
     public function run()
     {
-        $thangtruoc='2021-04-01';
+        $thangtruoc='2021-09-30';
         $date=Carbon::now();
         DB::table('Phong')->insert([
             ["id"=>$this->phongchuathue1,"tenphong"=>"Phòng chưa thuê 1","songuoimax"=>6,"giaphong"=>4000000,"trangthai"=>true],

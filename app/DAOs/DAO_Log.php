@@ -42,7 +42,7 @@ class DAO_Log
         $tmp->setNoidung(json_decode($rc->noidung,1));
         return $tmp;
     }
-    public function loggiatri(string $hopdong,string $loai) //1 //7
+ public function loggiatri(string $hopdong,string $loai) //1 //7
     {
         $thoigian=Carbon::now();
         $time=$thoigian->subMonth();
@@ -73,7 +73,20 @@ class DAO_Log
     {
         return app('db')->table('log')->where('idloai',6)->where('idhopdong',$idhopdong)->orderBy('ngaylap','DESC')->first();
     }
-
+    public function giaphong(string $idhopdong)
+    {
+        $thoigian=Carbon::now()->subDay(14);
+        return app('db')->table('log')->where('idloai',1)->where('idhopdong',$idhopdong)->whereDate('ngaylap','<',$thoigian)->orderBy('ngaylap','DESC')->first();
+    }
+    public function wifi(string $idhopdong)
+    {
+        return app('db')->table('log')->where('idloai',7)->where('idhopdong',$idhopdong)->whereDate('ngaylap','<',Carbon::now())->orderBy('ngaylap','DESC')->first();
+    }
+    public function soluongmoi(string $idhopdong,int $loai)
+    {
+        $thoigian=Carbon::now()->subDay(15);
+        return app('db')->table('log')->where('idloai',$loai)->where('idhopdong',$idhopdong)->whereDate('ngaylap','>',$thoigian)->count();
+    }
 
 
 

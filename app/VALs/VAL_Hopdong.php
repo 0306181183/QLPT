@@ -43,19 +43,7 @@ class VAL_Hopdong
         return false;
     }
 
-    public function xoa_hopdong($params)
-    {
-        try {
-            $this->validate($params, [
-                'id'=>'required|uuid|exists:hopdong,id',
 
-            ]);
-        } catch (ValidationException $e) {
-            $error_messages = $e->errors();
-            return (string)array_shift($error_messages)[0];
-        }
-        return false;
-    }
 
     public function tao_phieuthu($params)
     {
@@ -126,11 +114,31 @@ class VAL_Hopdong
         }
         return false;
     }
+    public function xoa_hopdong($params)
+    {
+        try {
+            $this->validate($params, [
+                'idhopdong'=>'required|uuid|exists:hopdong,id',
 
-
-
-
-
+            ]);
+        } catch (ValidationException $e) {
+            $error_messages = $e->errors();
+            return (string)array_shift($error_messages)[0];
+        }
+        return false;
+    }
+    public function ketthuc_hopdong($params)
+    {
+        try {
+            $this->validate($params, [
+                'idhopdong'=>'required|uuid|exists:hopdong,id',
+            ]);
+        } catch (ValidationException $e) {
+            $error_messages = $e->errors();
+            return (string)array_shift($error_messages)[0];
+        }
+        return false;
+    }
 
 
 }

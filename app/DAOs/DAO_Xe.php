@@ -56,6 +56,10 @@ class DAO_Xe
             ->where('hopdong.id',$idhopdong)
             ->count();
     }
+    public function dsxe(string $idkhachtro)
+    {
+        return app('db')->table('xe')->where('idkhach',$idkhachtro)->get();
+    }
 }
 /*->join('khachtro','hopdong.id','=','khachtro.idhopdong')
     ->join('xe','khachtro.id','=','xe.idkhach')*/

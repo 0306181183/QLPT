@@ -35,4 +35,7 @@ $router->post('wifi','HopdongController@wifi');
 $router->post('them-xe','XeController@them_xe');
 $router->post('xoa-xe','XeController@xoa_xe');
 $router->post('sua-giadv','DichvuController@sua_giadv');
+$router->post('xoa-hopdong','HopdongController@xoa_hopdong');
+$router->post('ketthuc-hopdong','HopdongController@xoa_hopdong');
+
 

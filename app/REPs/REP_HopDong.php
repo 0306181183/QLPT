@@ -147,82 +147,73 @@ class REP_HopDong
         }
        return false;
     }
-    public function tao_phieuthu($request)//chuahoanthanh
+
+    public function tao_phieuthu($request)
     {
 
-       /* $dto_hopdong=$this->dao_hopdong->form($this->dao_hopdong->dto_get($request->idhopdong));*/
-        $dto_trangthaithue= new DTO_Trangthaithue();
-        $time=Carbon::now();
-        $noidung=$this->dao_log->form($this->dao_log->chisodien($request->idhopdong))->getNoidung();
-        $dto_trangthaithue->setChisodien($noidung['chisodien']);
-        $dto_trangthaithue->setIdhopdong($request->idhopdong);
-        $dto_trangthaithue->setSoxe($this->dao_xe->soxe_HD($request->idhopdong));
+        try {
 
-        $dto_trangthaithue->setSonguoi($this->dao_phong->get_KhachTro($request->idhopdong));
-        //pass
+            $dto_trangthaithuemoi=new DTO_Trangthaithue();
+            $chisodien=$this->dao_log->form($this->dao_log->chisodien($request->idhopdong))->getNoidung();
+            $dto_trangthaithuemoi->setChisodien($chisodien['chisodien']); //lấy chỉ số điện tháng mới
+            //thông tin trạng thái thuê tháng trước
+            $dto_trangthaithue=$this->dao_trangthaithue->form($this->dao_trangthaithue->get_TrangThaiThue($request->idhopdong));
+            //tổng hợp các giá trị
+            $dto_trangthaithuemoi->setIdhopdong($request->idhopdong);
+            $dto_trangthaithuemoi->setSoxe($this->dao_xe->soxe_HD($request->idhopdong));
+            $dto_trangthaithuemoi->setSonguoi($this->dao_phong->get_KhachTro($request->idhopdong));
+            $giaphong=$this->dao_log->form($this->dao_log->giaphong($request->idhopdong))->getNoidung(); //lấy giá phòng
+            $dto_trangthaithuemoi->setGiaphong($giaphong['giaphong']); //set giá phòng
+            $wifi=$this->dao_log->form($this->dao_log->wifi($request->idhopdong))->getNoidung();
+            $dto_trangthaithuemoi->setWifi($wifi['wifi']); //set wifi
 
-        $giaphong=$this->dao_log->form($this->dao_log->loggiatri($request->idhopdong,1))->getNoidung();
-        $dto_trangthaithue->setGiaphong($giaphong['giaphong']);
-        $wifi=$this->dao_log->form($this->dao_log->loggiatri($request->idhopdong,7))->getNoidung();
-        $dto_trangthaithue->setWifi($wifi['wifi']);
-        app('db')->transaction(
-            function () use ($time, $dto_trangthaithue,$request)
-            {
-                $chisodientruoc=$this->dao_trangthaithue->form($this->dao_trangthaithue->get_TrangThaiThue($request->idhopdong))->getChisodien();
-                $idtrangthai=$this->dao_trangthaithue->add($dto_trangthaithue);
-                $dto_phieuthu= new DTO_Phieuthu();
-                $dto_phieuthu->setIdtrangthaithue($idtrangthai);
-                $dto_phieuthu->setGiaphong($dto_trangthaithue->getGiaphong());
-                //pass
-                $dto_phieuthu->setTienquanly($this->dao_giadichvu->form($this->dao_giadichvu->giadv(5))->getGiathaydoi());
+           /* app('db')->transaction(
+                function () use ($dto_trangthaithue,$dto_trangthaithuemoi) {*/
+                    $songay=Carbon::now()->diffInDays($dto_trangthaithue->getNgaylap()); //số ngày giữa hai lần lập phiếu
+                    $idtrangthai=$this->dao_trangthaithue->add($dto_trangthaithuemoi); //import trạng thái thuê
+                    //tạo phiếu thu
+                    $phieuthu= new DTO_Phieuthu();
+                    $phieuthu->setIdtrangthaithue($idtrangthai);
+                    //set tiền điện //tiền điện = (chỉ số mới-chỉ số cũ)*giá
+                    $tiendien=($this->dao_giadichvu->form($this->dao_giadichvu->giadv(1))->getGiathaydoi())*($dto_trangthaithuemoi->getChisodien()-$dto_trangthaithue->getChisodien());
+                    $phieuthu->setTiendien($tiendien);
+                    if($songay<15)
+                    {
+                        //tạo phiếu cách lần tạo cuối chưa tới 15 ngày
+                        $phieuthu->setGiaphong($songay*($dto_trangthaithuemoi->getGiaphong()/30));
+                        $phieuthu->setTiennuoc(0);
+                        $phieuthu->setTienquanly(0);
+                        $phieuthu->setTienrac(0);
+                        $phieuthu->setTienwifi(0);
+                    }else{
+                        //2 lần tạo phiếu đã đủ 15 ngày
+                        //set wifi,quanly,tienrac
+                        $phieuthu->setGiaphong($dto_trangthaithuemoi->getGiaphong());
+                        $phieuthu->setTienwifi($this->dao_giadichvu->form($this->dao_giadichvu->giadv(3))->getGiathaydoi()*$dto_trangthaithue->getWifi());
+                        $phieuthu->setTienquanly($this->dao_giadichvu->form($this->dao_giadichvu->giadv(5))->getGiathaydoi());
+                        $phieuthu->setTienrac($this->dao_giadichvu->form($this->dao_giadichvu->giadv(4))->getGiathaydoi());
+                        //set tiền nước
+                        //tính số người mới vào phòng
+                        $khachmoi=$this->dao_log->soluongmoi($dto_trangthaithuemoi->getIdhopdong(),2);
 
-                $dto_phieuthu->setTienrac($this->dao_giadichvu->form($this->dao_giadichvu->giadv(4))->getGiathaydoi());
-                if($dto_trangthaithue->getWifi()==true)
-                    $dto_phieuthu->setTienwifi($this->dao_giadichvu->form($this->dao_giadichvu->giadv(3))->getGiathaydoi());
-                else
-                    $dto_phieuthu->setTienwifi(0);
-                $soky=$dto_trangthaithue->getChisodien()-$chisodientruoc;
+                        $tiennuoc=$this->dao_giadichvu->form($this->dao_giadichvu->giadv(2))->getGiathaydoi()*($dto_trangthaithuemoi->getSonguoi()-$khachmoi);
+                        $phieuthu->setTiennuoc($tiennuoc);
+                        //set tiền xe
+                        $xemoi=$this->dao_log->soluongmoi($dto_trangthaithuemoi->getIdhopdong(),4);
+                        $tienxe=$this->dao_giadichvu->form($this->dao_giadichvu->giadv(6))->getGiathaydoi()*($dto_trangthaithuemoi->getSoxe()-$xemoi);
+                        $phieuthu->setTienxe($tienxe);
+                    }
+                    var_dump($phieuthu);
+                    $this->dao_phieuthu->add($phieuthu);
+              /*  });*/
 
-                $dto_phieuthu->setTiendien($this->dao_giadichvu->form($this->dao_giadichvu->giadv(1))->getGiathaydoi()*$soky);
-                $songuoi=$dto_trangthaithue->getSonguoi();
-                $songuoi=$songuoi-$this->dao_log->slkhach($request->idhopdong,2)+$this->dao_log->slkhach($request->idhopdong,3);
-                $dto_phieuthu->setTiennuoc($songuoi*$this->dao_giadichvu->form($this->dao_giadichvu->giadv(2))->getGiathaydoi());
-                //pass
-                $dto_phieuthu->setTienxe($this->tienxe($request->idhopdong,$dto_trangthaithue->getSoxe()));
-                var_dump($dto_phieuthu);
-                $this->dao_phieuthu->add($dto_phieuthu);
-
-            });
-
-    }
-    public function tienxe(string $idhopdong,int $soxe)
-    {
-       $gia=$this->dao_giadichvu->form($this->dao_giadichvu->giadv(6))->getGiathaydoi();
-
-       $thanhtien=0;
-       $dsthemxe=$this->dao_log->dsxe($idhopdong,4);
-        $dsxoaxe=$this->dao_log->dsxe($idhopdong,5);
-        if($dsthemxe!=null)
-        foreach ($dsthemxe as $xe)
+        }catch (Exception $e)
         {
-            $logxe=$this->dao_log->form($xe);
-            $songay=30-Date::parse($logxe->getNgaylap())->day;
-            $thanhtien=$thanhtien+($songay/30)*$gia;
-            $soxe--;
-
+            return $e;
         }
-
-        if($dsxoaxe!=null)
-        foreach ($dsxoaxe as $xe)
-        {
-            $logxe=$this->dao_log->form($xe);
-            $songay=Date::parse($logxe->getNgaylap())->day;
-            $thanhtien=$thanhtien+($songay/30)*$gia;
-        }
-
-        return $thanhtien+($soxe*$gia);
-
+        return false;
     }
+
     public  function  thanh_toan($request)
     {
         try {
@@ -330,4 +321,136 @@ class REP_HopDong
         }
         return false;
     }
+    public  function xoa_hopdong($request)
+    {
+        try {
+            app('db')->transaction(
+                function () use ($request)
+                {
+                    $this->thaotacxoaHD($request->idhopdong);
+                });
+        }catch (Exception $e)
+        {
+            return $e;
+        }
+        return false;
+    }
+    public  function ketthuc_hopdong($request)
+    {
+        try {
+            app('db')->transaction(
+                function () use ($request)
+                {
+                    //Tạo phiếu thu cuối cùng
+                    $this->tao_phieuthu($request);
+                    //Kiểm tra xem đã đủ số tháng trong hợp đồng hay chưa
+                    $hopdong=$this->dao_hopdong->form($this->dao_hopdong->dto_get($request->idhopdong));
+                    $sothang=Carbon::now()->diffInMonths($hopdong->getNgaylap());
+                    if($sothang>=$hopdong->getThoihan())
+                    {
+                        $phieuthu=$this->dao_phieuthu->form($this->dao_phieuthu->phieuthu_idhopdong($hopdong->getId()));
+                        $phieuthu->setGiaphong($phieuthu->getGiaphong()-$hopdong->getTiencoc());
+                    }
+                    //Xóa các dữ liệu liên quan
+                    $this->thaotacxoaHD($request->idhopdong);
+                });
+
+        }catch (Exception $e)
+        {
+            return $e;
+        }
+        return false;
+    }
+    // Sửa trạng thái hợp đồng(xóa), sửa trạng thái các khách trong phòng(xóa), xóa các xe liên quan
+    public function thaotacxoaHD(string $idhopdong)
+    {
+        //Sửa trạng thái hợp đồng
+        $dto_hopdong=$this->dao_hopdong->form($this->dao_hopdong->dto_get($idhopdong));
+        $this->dao_hopdong->modify($dto_hopdong);
+        //Sửa trạng thái các khách trọ
+        $dskhachtro=$this->dao_khachtro->dskhachtro($idhopdong);
+        foreach ($dskhachtro as $item)
+        {
+            $khachtro=$this->dao_khachtro->form($item);
+            $this->dao_xe->remove_idkhach($khachtro->getId()); //Xóa các xe thuộc khách trọ
+            //sửa trạng thái khách(false)
+            $khachtro->setTrangthai(false);
+            $this->dao_khachtro->modify($khachtro);
+        }
+
+    }
+    /*public function tao_phieuthu1($request)
+    {
+        $dto_trangthaithue= new DTO_Trangthaithue();
+        $time=Carbon::now();
+        $noidung=$this->dao_log->form($this->dao_log->chisodien($request->idhopdong))->getNoidung();
+        $dto_trangthaithue->setChisodien($noidung['chisodien']);
+        $dto_trangthaithue->setIdhopdong($request->idhopdong);
+        $dto_trangthaithue->setSoxe($this->dao_xe->soxe_HD($request->idhopdong));
+
+        $dto_trangthaithue->setSonguoi($this->dao_phong->get_KhachTro($request->idhopdong));
+        //pass
+
+        $giaphong=$this->dao_log->form($this->dao_log->loggiatri($request->idhopdong,1))->getNoidung();
+        $dto_trangthaithue->setGiaphong($giaphong['giaphong']);
+        $wifi=$this->dao_log->form($this->dao_log->loggiatri($request->idhopdong,7))->getNoidung();
+        $dto_trangthaithue->setWifi($wifi['wifi']);
+        app('db')->transaction(
+            function () use ($time, $dto_trangthaithue,$request)
+            {
+                $chisodientruoc=$this->dao_trangthaithue->form($this->dao_trangthaithue->get_TrangThaiThue($request->idhopdong))->getChisodien();
+                $idtrangthai=$this->dao_trangthaithue->add($dto_trangthaithue);
+                $dto_phieuthu= new DTO_Phieuthu();
+                $dto_phieuthu->setIdtrangthaithue($idtrangthai);
+                $dto_phieuthu->setGiaphong($dto_trangthaithue->getGiaphong());
+                //pass
+                $dto_phieuthu->setTienquanly($this->dao_giadichvu->form($this->dao_giadichvu->giadv(5))->getGiathaydoi());
+
+                $dto_phieuthu->setTienrac($this->dao_giadichvu->form($this->dao_giadichvu->giadv(4))->getGiathaydoi());
+                if($dto_trangthaithue->getWifi()==true)
+                    $dto_phieuthu->setTienwifi($this->dao_giadichvu->form($this->dao_giadichvu->giadv(3))->getGiathaydoi());
+                else
+                    $dto_phieuthu->setTienwifi(0);
+                $soky=$dto_trangthaithue->getChisodien()-$chisodientruoc;
+
+                $dto_phieuthu->setTiendien($this->dao_giadichvu->form($this->dao_giadichvu->giadv(1))->getGiathaydoi()*$soky);
+                $songuoi=$dto_trangthaithue->getSonguoi();
+                $songuoi=$songuoi-$this->dao_log->slkhach($request->idhopdong,2)+$this->dao_log->slkhach($request->idhopdong,3);
+                $dto_phieuthu->setTiennuoc($songuoi*$this->dao_giadichvu->form($this->dao_giadichvu->giadv(2))->getGiathaydoi());
+                //pass
+                $dto_phieuthu->setTienxe($this->tienxe($request->idhopdong,$dto_trangthaithue->getSoxe()));
+                var_dump($dto_phieuthu);
+                $this->dao_phieuthu->add($dto_phieuthu);
+
+            });
+
+    }*/
+    /*public function tienxe(string $idhopdong,int $soxe)
+    {
+        $gia=$this->dao_giadichvu->form($this->dao_giadichvu->giadv(6))->getGiathaydoi();
+
+        $thanhtien=0;
+        $dsthemxe=$this->dao_log->dsxe($idhopdong,4);
+        $dsxoaxe=$this->dao_log->dsxe($idhopdong,5);
+        if($dsthemxe!=null)
+            foreach ($dsthemxe as $xe)
+            {
+                $logxe=$this->dao_log->form($xe);
+                $songay=30-Date::parse($logxe->getNgaylap())->day;
+                $thanhtien=$thanhtien+($songay/30)*$gia;
+                $soxe--;
+
+            }
+
+        if($dsxoaxe!=null)
+            foreach ($dsxoaxe as $xe)
+            {
+                $logxe=$this->dao_log->form($xe);
+                $songay=Date::parse($logxe->getNgaylap())->day;
+                $thanhtien=$thanhtien+($songay/30)*$gia;
+            }
+
+        return $thanhtien+($soxe*$gia);
+
+    }*/
 }

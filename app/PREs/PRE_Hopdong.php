@@ -5,6 +5,7 @@ namespace App\PREs;
 
 
 use App\DAOs\DAO_Hopdong;
+use App\DAOs\DAO_Phieuthu;
 use App\DAOs\DAO_Phong;
 use App\DAOs\DAO_TrangthaiThue;
 use App\Mes as MES;
@@ -15,12 +16,14 @@ class PRE_Hopdong
     private DAO_Hopdong $dao_hopdong;
     private DAO_Phong $dao_phong;
     private DAO_TrangthaiThue $dao_trangthaithue;
+    private DAO_Phieuthu $dao_phieuthu;
 
-    public function __construct(DAO_Hopdong $dao_hopdong, DAO_Phong $dao_phong, DAO_TrangthaiThue $dao_trangthaithue)
+    public function __construct(DAO_Hopdong $dao_hopdong, DAO_Phong $dao_phong, DAO_TrangthaiThue $dao_trangthaithue,DAO_Phieuthu $dao_phieuthu)
     {
         $this->dao_hopdong = $dao_hopdong;
         $this->dao_phong=$dao_phong;
         $this->dao_trangthaithue=$dao_trangthaithue;
+        $this->dao_phieuthu=$dao_phieuthu;
     }
 
     public function tao_hopdong($params): array
@@ -69,6 +72,13 @@ class PRE_Hopdong
     {
         if($this->dao_trangthaithue->ktthanhtoan($params->idhopdong)>0)
             return ['result'=>true,'message'=>MES::$taophieuthu_fail];
+        return ['result' => false, 'message' => Null];
+
+    }
+    public function xoa_hopdong($params): array
+    {
+        if($this->dao_phieuthu->ktphieuthu($params->idhopdong)>0)
+            return ['result'=>true,'message'=>MES::$xoaHD_fail];
         return ['result' => false, 'message' => Null];
 
     }

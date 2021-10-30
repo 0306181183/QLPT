@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\PREs\PRE_Hopdong;
 use App\REPs\REP_Hopdong;
 use App\VALs\VAL_Hopdong;
@@ -50,5 +51,13 @@ class HopdongController extends Controller
     public function wifi(Request $request)
     {
         return $this->command_frame($request, $this->val, null, $this->rep, 'wifi', MES::$thaydoiwifi);
+    }
+    public function xoa_hopdong(Request $request)
+    {
+        return $this->command_frame($request,$this->val,$this->pre,$this->rep,'xoa_hopdong',MES::$xoaHD);
+    }
+    public function ketthuc_hopdong(Request $request)
+    {
+        return $this->command_frame($request,$this->val,null,$this->rep,'ketthuc_hopdong',MES::$ketthucHD);
     }
 }

@@ -32,6 +32,9 @@ class Mes
     static string $themxe="Thêm xe thành công";
     static string $xoaxe="Xóa xe thành công";
     static string $suagiadv="Sửa giá dịch vụ";
+    static string $xoaHD="Xóa hợp đồng thành công";
+    static string $xoaHD_fail="Xóa hợp đồng thất bại do đã tồn tại phiếu thu";
+    static string $ketthucHD="Kết thúc hợp đồng thành công, hãy kiểm tra phiếu thu kết thúc";
     public static $conflict="Lỗi hệ thống";
     public static $unexpected="Lỗi không xác định";
 }

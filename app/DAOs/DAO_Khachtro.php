@@ -63,6 +63,10 @@ class DAO_Khachtro
     {
         return app('db')->table('khachtro')->where('id', $id)->value('idhopdong');
     }
+    public function dskhachtro(string $idhopdong)
+    {
+        return app('db')->table('khachtro')->where('idhopdong',$idhopdong)->get();
+    }
 
 
 

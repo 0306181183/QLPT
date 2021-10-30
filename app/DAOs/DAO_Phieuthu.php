@@ -56,7 +56,21 @@ class DAO_Phieuthu
         $tmp->setTienxe($rc->tienxe);
         return $tmp;
     }
-
+    public function ktphieuthu(string $idhopdong)
+    {
+        return app('db')->table('phieuthu')
+            ->join('trangthaithue','trangthaithue.id','=','phieuthu.idtrangthaithue')
+            ->where('trangthaithue.idhopdong',$idhopdong)
+            ->count();
+    }
+    public function phieuthu_idhopdong(string $idhopdong)
+    {
+        return app('db')->table('phieuthu')
+            ->join('trangthaithue','trangthaithue.id','=','phieuthu.idtrangthaithue')
+            ->where('trangthaithue.idhopdong',$idhopdong)
+            ->orderBy('trangthaithue.ngaylap','DESC')
+            ->first();
+    }
 
 
 
